@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-
+import { auth } from '../auth/firebase';
 export default function Profile() {
     return (
         <SafeAreaView style={styles.container}>
@@ -11,7 +11,7 @@ export default function Profile() {
                     <View style={styles.info}>
                         <Image style={styles.img} source={require('../../assets/avatar.jpg')} />
                         <View>
-                            <Text style={styles.name}>Jane Cooper</Text>
+                            <Text style={styles.name}>{auth.currentUser?.email}</Text>
                             <Text>Provider User (Admin)</Text>
                         </View>
                     </View>
@@ -21,7 +21,6 @@ export default function Profile() {
         </SafeAreaView>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1

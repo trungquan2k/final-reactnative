@@ -1,7 +1,11 @@
 import StackNavigation from './src/navigations/StackNavigation';
 
-export default function App() {
+import { createStackNavigator } from "@react-navigation/stack";
+
+const App = () => {
   return (
     <StackNavigation />
   );
 }
+
+export default App;
