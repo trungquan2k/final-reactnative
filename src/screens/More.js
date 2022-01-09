@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Switch, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth } from "../auth/firebase";
+
 export default function More({ navigation }) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
