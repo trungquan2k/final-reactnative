@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Switch, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { auth } from "../auth/firebase";
 export default function More({ navigation }) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+    const handleSignOut = () => {
+        auth
+          .signOut()
+          .then(() => {
+            navigation.navigate("Auth")
+          })
+          .catch(error => alert(error.message))
+      }
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>More</Text>
@@ -80,10 +87,10 @@ export default function More({ navigation }) {
                     </View>
                 </View>
                 <View style={[styles.body, { paddingVertical: 11 }]}>
-                    <View style={styles.row}>
-                        <Text>Log out</Text>
+                    <TouchableOpacity style={styles.row} onPress={()=>{handleSignOut()}}>
+                        <Text >Log out</Text>
                         <MaterialCommunityIcons name="logout" size={24} color="#200E32" />
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
