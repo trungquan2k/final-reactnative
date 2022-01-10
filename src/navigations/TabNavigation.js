@@ -13,7 +13,8 @@ export default function TabNavigation() {
             <Tab.Screen name='Dashboard' component={Dashboard} options={{
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (<Feather name="home" size={18} color={focused ? "#DB147F" : "#ACB2B8"} />),
-                tabBarLabel: ({ focused }) => (<Text style={{ color: focused ? '#DB147F' : '#ACB2B8' }}>Dashboard</Text>)
+                tabBarLabel: ({ focused }) => (<Text style={{ color: focused ? '#DB147F' : '#ACB2B8' }}>Dashboard</Text>),
+                headerShown:false
             }} />
             <Tab.Screen name='Centres' component={Centres} options={{
                 headerShown: false,

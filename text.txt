@@ -1,0 +1,215 @@
+import React, { useState } from 'react'
+import { StyleSheet, TouchableOpacity, View, Text, LayoutAnimation, Image } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
+const TIME = { min: 0, max: 24 }
+const SliderPad = 12;
+const Accordion = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleOpen = () => {
+        setIsOpen(value => !value);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+
+    const [multiSliderValue, setMultiSliderValue] = useState([3, 7]);
+
+    
+    const { min, max } = TIME;
+    const [width, setWidth] = useState(280);
+    const [selected, setSelected] = useState(null);
+
+    if (!selected) {
+        setSelected([min]); // we are only selected min, since it is single slider
+    }
+
+    // Callbacks
+    const onLayout = (event) => {
+        setWidth(event.nativeEvent.layout.width - SliderPad * 2);
+    };
+    const onValuesChangeFinish = (values) => {
+        setSelected(values);
+    };
+    return (
+        <View style={styles.rating}>
+            <View style={styles.body}>
+                <Image
+                    source={{ uri: props.imgUri }}
+                    style={{
+                        height: 48,
+                        width: 48,
+                        resizeMode: 'contain',
+                    }}
+                />
+                <View style={styles.content}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.title}>{props.subtitle}</Text>
+                </View>
+                <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
+                    {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
+                </TouchableOpacity>
+            </View>
+           <View style={{marginTop:100}}>
+           <MultiSlider
+                min={min}
+                max={max}
+                allowOverlap
+                values={selected}
+                sliderLength={width}
+                onValuesChangeFinish={onValuesChangeFinish}
+                enableLabel={true}
+                trackStyle={{
+                    height: 10,
+                    borderRadius: 8,
+                }}
+                markerOffsetY={3}
+                selectedStyle={{
+                    backgroundColor: "#895CDF",
+                }}
+                unselectedStyle={{
+                    backgroundColor: "#000",
+                }}
+            />
+           </View>
+
+        </View>
+    );
+};
+export default Accordion;
+const styles = StyleSheet.create({
+    rating: {
+        // flex:1,
+        padding: 20,
+    },
+    body: {
+        flexDirection: 'row',
+        padding: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0,
+        elevation: 1,
+        backgroundColor: "white",
+        borderRadius: 10
+    },
+    content: {
+        flexDirection: 'column',
+        // justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        flex: 1
+    },
+    title: {
+        color: 'black',
+        // paddingVertical: 4,
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    hidden: {
+        height: 0,
+    },
+    list: {
+        overflow: 'hidden'
+    },
+    button: {
+        alignItems: 'baseline',
+        padding: 5
+        // justifyContent:'center'
+    }
+});
+
+//<View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
+{/* <Text>{props.children}</Text>
+</View>
+<View style={styles.container}>
+    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{range}</Text>
+    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{sliding}</Text>
+    <Slider
+        style={{ width: 250, height: 40 }}
+        minimumValue={0}
+        maximumValue={10}
+        minimumTrackTintColor="yellow"
+        maximumTrackTintColor="#000000"
+        thumbTintColor='tomato'
+        value={5}
+        onValueChange={value => setRange(parseFloat(value))}
+        onSlidingStart={() => setSliding('Sliding')}
+        onSlidingComplete={() => setSliding('Inactive')}
+    />
+    <StatusBar style="auto" />
+</View> */}
+
+
+///centre 
+  const data = [
+        {
+            id: 1,
+            imgUri: "https://i.ibb.co/3kX4vCy/icon.png",
+            title: "Long Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 2,
+            imgUri: "https://i.ibb.co/k85FjrG/icon1.png",
+            title: "Pre-School/ Kindergarten",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 3,
+            imgUri: "https://i.ibb.co/nmZX5zP/icon2.png",
+            title: "Before & After School Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 4,
+            imgUri: "https://i.ibb.co/ssp4GPP/icon3.png",
+            title: "Family Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 5,
+            imgUri: "https://i.ibb.co/RHvbgJR/icon4.png",
+            title: "Vacation Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        }
+    ]
+    const renderItem = ({ item }) => (      
+        <ServiceComponent
+            imgUri={item.imgUri}
+            title={item.title}
+            subtitle={item.subtile}
+            money={item.money}
+
+        />
+    );
+
+    
+    return (
+        <ScrollView style={styles.container}>
+            {/* <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+            /> */}
+            <Accordion
+                imgUri="https://i.ibb.co/RHvbgJR/icon4.png"
+                title="asdasasdas"
+                subtitle="abc"
+                children="xyz"
+            />
+            <Accordion
+                imgUri="https://i.ibb.co/RHvbgJR/icon4.png"
+                title="aec"
+                subtitle="abc"
+                children="xyz"
+            />
+
+        </ScrollView>
+    );

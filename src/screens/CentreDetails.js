@@ -3,6 +3,10 @@ import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Summary from './Summary';
 import Information from './Information';
+import FeatureComponent from '../components/FeatureComponent';
+import ServiceComponent from '../components/ServiceComponent';
+import { ReviewComponent } from '../components/RatingandServiceComponent';
+import MarketingComponent from '../components/MarketingComponent';
 
 export default function CentreDetails() {
     const [active, setActive] = useState('SUMMARY');
@@ -14,7 +18,7 @@ export default function CentreDetails() {
                 <Text style={styles.headerTitle}>Centre Details</Text>
             </View>
             <View>
-                <ScrollView contentContainerStyle={styles.tabPane} horizontal={true}>
+                <ScrollView contentContainerStyle={styles.tabPane} horizontal={true} showsHorizontalScrollIndicator={false}>
                     <Text onPress={() => { setActive('SUMMARY') }} style={[styles.tabItem, { color: active == 'SUMMARY' ? '#DB147F' : '#857E7F' }]}>SUMMARY</Text>
                     <Text onPress={() => { setActive('INFORMATION') }} style={[styles.tabItem, { color: active == 'INFORMATION' ? '#DB147F' : '#857E7F' }]}>CENTRE INFORMATION</Text>
                     <Text onPress={() => { setActive('HOURS') }} style={[styles.tabItem, { color: active == 'HOURS' ? '#DB147F' : '#857E7F' }]}>HOURS</Text>
@@ -26,6 +30,11 @@ export default function CentreDetails() {
             </View>
             {active == 'SUMMARY' ? <Summary /> : null}
             {active == 'INFORMATION' ? <Information /> : null}
+            {active == 'FEATURES' ? <FeatureComponent /> : null}
+            {active == 'SERVICES' ? <ServiceComponent /> : null}
+            {active == 'REVIEWS' ? <ReviewComponent /> :null}
+            {active == 'MARKETING' ? <MarketingComponent /> :null}
+         
         </View>
     );
 }

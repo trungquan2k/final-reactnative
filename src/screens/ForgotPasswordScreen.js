@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Modal, Image } from "react-native";
-
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 function ForgotPasswordScreen() {
     const [email, setEmail] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
@@ -8,9 +9,12 @@ function ForgotPasswordScreen() {
     const image = {
         uri: "https://i.ibb.co/HNDmKHP/logo-login.png",
     };
-
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
+            <View style={{paddingVertical:20}}>
+                <Ionicons name={'arrow-back-outline'} size={25} color="#857E7F" onPress={() => { navigation.goBack() }} />  
+            </View>
             <Text style={styles.title}>Forgot Password</Text>
             <Text style={styles.subtitle}>Please enter your email address to get reset link</Text>
             <TextInput
