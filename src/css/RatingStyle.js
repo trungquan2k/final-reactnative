@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 14,
     },
+    subtitle:{
+        fontSize:12,
+        color:'black'
+    },
     hidden: {
         height: 0,
     },

@@ -11,11 +11,13 @@ export default function TabNavigation() {
     return (
         <Tab.Navigator>
             <Tab.Screen name='Dashboard' component={Dashboard} options={{
+                headerShown: false,
                 tabBarIcon: ({ focused }) => (<Feather name="home" size={18} color={focused ? "#DB147F" : "#ACB2B8"} />),
                 tabBarLabel: ({ focused }) => (<Text style={{ color: focused ? '#DB147F' : '#ACB2B8' }}>Dashboard</Text>),
                 headerShown:false
             }} />
             <Tab.Screen name='Centres' component={Centres} options={{
+                headerShown: false,
                 tabBarIcon: ({ focused }) => (<Entypo name="shop" size={18} color={focused ? "#DB147F" : "#ACB2B8"} />),
                 tabBarLabel: ({ focused }) => (<Text style={{ color: focused ? '#DB147F' : '#ACB2B8' }}>Centres</Text>)
             }} />
