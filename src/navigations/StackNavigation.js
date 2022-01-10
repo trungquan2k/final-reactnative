@@ -11,8 +11,8 @@ export default function StackNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator >
-                <Stack.Screen name='Auth' component={LoginScreen} options={{ headerShown: false }} />
-                <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} options={{ headerShown: false }} />
+                {/* <Stack.Screen name='Auth' component={LoginScreen} options={{ headerShown: false }} /> */}
+                {/* <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} options={{ headerShown: false }} /> */}
                 <Stack.Screen name='TabNavigation' component={TabNavigation} options={{ headerShown: false }} />
                 <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false }} />   
             </Stack.Navigator>

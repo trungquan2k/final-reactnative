@@ -1,37 +1,83 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
 
-export default function ServiceComponent(props) {
-    return (
+export default function ServiceComponent() {
+
+
+    const data = [
+        {
+            id: 1,
+            imgUri: "https://i.ibb.co/3kX4vCy/icon.png",
+            title: "Long Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 2,
+            imgUri: "https://i.ibb.co/k85FjrG/icon1.png",
+            title: "Pre-School/ Kindergarten",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 3,
+            imgUri: "https://i.ibb.co/nmZX5zP/icon2.png",
+            title: "Before & After School Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 4,
+            imgUri: "https://i.ibb.co/ssp4GPP/icon3.png",
+            title: "Family Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 5,
+            imgUri: "https://i.ibb.co/RHvbgJR/icon4.png",
+            title: "Vacation Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        }
+    ]
+    const renderItem = ({ item }) => (
         <View style={styles.service}>
-            <View style={styles.body}>
-                <Image
-                    source={{ uri: props.imgUri }}
-                    style={{
-                        height: 48,
-                        width: 48,
-                        resizeMode: 'contain',
-                    }}
-                />
-                <View style={styles.content}>
-                    <Text style={styles.title}>{props.title}</Text>
-                    <Text style={styles.subtitle}>{props.subtitle}</Text>
-                    <Text style={styles.money}>{props.money}</Text>
-                </View>
+        <View style={styles.body}>
+            <Image
+                source={{ uri: item.imgUri }}
+                style={{
+                    height: 48,
+                    width: 48,
+                    resizeMode: 'contain',
+                }}
+            />
+            <View style={styles.content}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.subtitle}>{item.subtitle}</Text>
+                <Text style={styles.money}>{item.money}</Text>
             </View>
-            
         </View>
+
+    </View>
+    );
+    return (
+        <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        />
     )
 }
 
 const styles = StyleSheet.create({
-    service:{
-        flex:1,
-        padding:10,
+    service: {
+        flex: 1,
+        padding: 10,
     },
-    body:{
-        flexDirection:'row',
-        padding:20,
+    body: {
+        flexDirection: 'row',
+        padding: 20,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -42,24 +88,24 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 10
     },
-    content:{
-        flexDirection:'column',
-        justifyContent:'space-between',
-        paddingHorizontal:16,
+    content: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
     },
-    title:{
-        color:'black', 
-        paddingVertical:4,
-        fontWeight:'bold'  ,
-        fontSize:14,
+    title: {
+        color: 'black',
+        paddingVertical: 4,
+        fontWeight: 'bold',
+        fontSize: 14,
     },
-    subtitle:{
-        color:'black', 
-        paddingVertical:4,
+    subtitle: {
+        color: 'black',
+        paddingVertical: 4,
     },
-    money:{
-        color:'black', 
-        paddingVertical:4,
+    money: {
+        color: 'black',
+        paddingVertical: 4,
     }
 
 })

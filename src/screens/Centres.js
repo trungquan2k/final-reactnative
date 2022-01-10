@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList } from 'react-native';
 
 
 
 export default function Centres() {
 
+       
     return (
-        <View>
-            <Text>Centres</Text>
+        <View style={styles.container}>
+            
+        
         </View>
     );
 }
