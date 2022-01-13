@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         elevation: 0,
         padding: 20,
-
+        
     },
     logo: {
         position: 'absolute',

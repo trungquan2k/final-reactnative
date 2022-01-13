@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 
 
-const HoursComponents = () => {
-    const [activeButton, setActiveButton] = useState('1')
+export default function HoursComponents() {
+    const [activeButton, setActiveButton] = useState('')
+
 
     const data = [
         {
-            id: '1',
+            id: 1,
             title: "Normal",
             monday: "Mon-Fri",
             sat: "Sat",
@@ -20,7 +21,7 @@ const HoursComponents = () => {
             hoursAfternoon: "12:00"
         },
         {
-            id: '2',
+            id: 2,
             title: "School Term",
             monday: "Mon-Fri",
             sat: "Sat",
@@ -33,7 +34,7 @@ const HoursComponents = () => {
             hoursAfternoon: "12:00"
         },
         {
-            id: '3',
+            id: 3,
             title: "School Holidays",
             monday: "Mon-Fri",
             sat: "Sat",
@@ -46,39 +47,38 @@ const HoursComponents = () => {
             hoursAfternoon: "12:00"
         }
     ]
-    const object = data.find(x => x.id === activeButton);
-    console.log(object);
 
-    const renderItem = ({ item }) => {
-
-        const activeHandle = (id) => {
-            console.log(id)
-            if(id==='1'){
-                setActiveButton('1')
-            }
-        }
-        return (
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <View>
-                        <Text style={styles.title}>{item.title}</Text>
+    const renderItem = ({ item }) => (
+        <View style={styles.container}>
+            <View style={styles.content}>
+                <View style={styles.title}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16, color: "#2D1F21", paddingVertical: 10 }}>{item.title}</Text>
+                </View>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <Text style={styles.textLight}>{item.monday}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <Text style={styles.textLight}>{item.sat}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <Text style={styles.textLight}>{item.sun}</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.body}>
+                    <View style={styles.bodyLeft}>
+                        <Text style={styles.textDark}>{item.morning}</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.hours}>{item.hourMorning}</Text>
+                            <Text style={styles.hours}>{item.hourAfternoon}</Text>
+                        </View>
                     </View>
-                    <View style={styles.header}>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.monday}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.sat}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.sun}</Text>
-                        </TouchableOpacity>
-                        {/* <TouchableOpacity onPress={() => { setActiveButton('2') }} style={activeButton === '2' ? styles.btnSelected : styles.btnNotSelected}>
-                            <Text style={styles.textLight}>{item.sat}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setActiveButton('3') }} style={activeButton === '3' ? styles.btnSelected : styles.btnNotSelected}>
-                            <Text style={styles.textLight}>{item.sun}</Text>
-                        </TouchableOpacity> */}
+                    <View >
+                        <Text style={styles.textDark}>{item.afternoon}</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.hours}>{item.hoursMorning}</Text>
+                            <Text style={styles.hours}>{item.hoursAfternoon}</Text>
+                        </View>
                     </View>
                     <View style={styles.body}>
                         <View style={styles.bodyLeft}>
@@ -99,8 +99,8 @@ const HoursComponents = () => {
                     </View>
                 </View>
             </View>
-        )
-    };
+        </View>
+    );
 
     return (
         <FlatList
@@ -111,7 +111,6 @@ const HoursComponents = () => {
     )
 }
 
-export default HoursComponents;
 const styles = StyleSheet.create({
     container: {
         padding: 10,

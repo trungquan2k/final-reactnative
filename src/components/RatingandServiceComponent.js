@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { ScrollView } from 'react-native';
-import NQSRatingComponent from './NQSRatingComponent';
-import RatingComponent from './RatingComponent';
-import ReviewUserComponent from './ReviewUserComponent';
+import { TouchableOpacity, View, Text, LayoutAnimation, Image, ScrollView, FlatList, SafeAreaView, SectionList } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import DoubleSlider from './DoubleSlider';
+import styles from '../css/RatingStyle';
+import { Ionicons } from '@expo/vector-icons';
 
 
 

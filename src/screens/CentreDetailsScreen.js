@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Summary from './SummaryScreen';
 import Information from './InformationScreen';
@@ -7,21 +7,21 @@ import HoursComponents from '../components/HoursComponents';
 import FeatureComponent from '../components/FeatureComponent';
 import ServiceComponent from '../components/ServiceComponent';
 import MarketingComponent from '../components/MarketingComponent';
-import RatingAndServiceComponent from '../components/RatingandServiceComponent';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
+
 
 
 const CentreDetails = ({navigation}) => {
     const [active, setActive] = useState('SUMMARY');
     return (
         <View style={{ flex: 1 }}>
-
-            <View style={styles.header}>
-                {/* <TouchableOpacity onPress={() => navigation.goBack()} > */}
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.header}>
                     <Ionicons style={styles.headerBack} name="arrow-back-sharp" size={20} color="#857E7F" />
-                {/* </TouchableOpacity> */}
-                <Text style={styles.headerTitle}>Centre Details</Text>
-            </View>
-
+                    <Text style={styles.headerTitle}>Centre Details</Text>
+                </View>
+            </TouchableOpacity>
             <View>
                 <ScrollView contentContainerStyle={styles.tabPane} horizontal={true} showsHorizontalScrollIndicator={false}>
                     <Text onPress={() => { setActive('SUMMARY') }} style={[styles.tabItem, { color: active == 'SUMMARY' ? '#DB147F' : '#857E7F' }]}>SUMMARY</Text>

@@ -46,7 +46,7 @@ export default CardContentDashBoard
 const styles = StyleSheet.create({
     viewContent: {
         padding: 20,
-
+        
     },
     card: {
         shadowColor: "#000",
@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         borderColor: "black",
         borderBottomColor: '#DB147F',
-        borderRadius: 16,
+        borderRadius:16,
         //position
         position: 'relative',
         bottom: 60,
         // top:-60,
         padding: 16,
-        alignItems: 'center',
-        zIndex: 2
+        alignItems:'center',
+        zIndex:2
 
     },
     leftCart: {
