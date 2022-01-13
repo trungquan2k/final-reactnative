@@ -1,9 +1,7 @@
 import React from 'react'
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
 
-export default function ServiceComponent() {
-
-
+const ServiceComponent=()=> {
     const data = [
         {
             id: 1,
@@ -41,20 +39,17 @@ export default function ServiceComponent() {
             money: "$112.00 /full day"
         }
     ]
+
     const renderItem = ({ item }) => (
         <View style={styles.service}>
         <View style={styles.body}>
             <Image
                 source={{ uri: item.imgUri }}
-                style={{
-                    height: 48,
-                    width: 48,
-                    resizeMode: 'contain',
-                }}
+                style={styles.icon}
             />
             <View style={styles.content}>
                 <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.subtitle}>{item.subtitle}</Text>
+                <Text style={styles.subtitle}>{item.subtile}</Text>
                 <Text style={styles.money}>{item.money}</Text>
             </View>
         </View>
@@ -69,6 +64,8 @@ export default function ServiceComponent() {
         />
     )
 }
+
+export default ServiceComponent;
 
 const styles = StyleSheet.create({
     service: {
@@ -106,6 +103,10 @@ const styles = StyleSheet.create({
     money: {
         color: 'black',
         paddingVertical: 4,
+    },
+    icon:{
+        height: 48,
+        width: 48,
     }
 
 })

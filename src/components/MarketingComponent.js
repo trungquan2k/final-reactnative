@@ -1,42 +1,68 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import styles from '../css/StyleMarketing'
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import SwitchToggle from "react-native-switch-toggle";
 import { Ionicons } from '@expo/vector-icons';
 import { BottomSheet } from 'react-native-btr';
 
 const MarketingComponent = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-
-    // switch toggle
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    // modal show bottom
     const [visible, setVisible] = useState(false);
     const toggleBottomNavigationView = () => {
         setVisible(!visible);
     };
+    const [active, setActive] = useState([1, 2])
 
-    return (
-        <View>
+    const data = [
+        {
+            id: 1,
+            name: 'Featured Listing',
+            icon: 'information-circle',
+            price: "$" + 50 + "/per month"
+        },
+        {
+            id: 2,
+            name: 'Featured Listing',
+            icon: 'information-circle',
+            price: "$" + 50 + "/per month"
+        },
+        {
+            id: 3,
+            name: 'Featured Listing',
+            icon: 'information-circle',
+            price: "$" + 50 + "/per month"
+        }
+    ]
+
+    const RenderItem = ({ item }) => {
+        const check = active.includes(item.id);
+        const toggleSwitch = () => {
+            if (check) {
+                active.splice(active.indexOf(item.id), 1);
+                setActive([...active]);
+            } else {
+                setActive([...active, item.id]);
+            }
+        }
+        return (
             <View style={styles.marketing}>
                 <View style={styles.layout}>
                     <View style={styles.content}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>Featured Listing</Text>
+                        <View style={{
+                            flexDirection: 'row'
+                        }}>
+                            <Text>{item.name}</Text>
                             <TouchableOpacity
-                                onPress={()=>toggleBottomNavigationView()}
+                                onPress={() => toggleBottomNavigationView()}
                             >
-                                <Ionicons name="information-circle" size={14} color="#857E7F" />
+                                <Ionicons name={item.icon} size={14} color="#857E7F" />
                             </TouchableOpacity>
 
                         </View>
-                        <Text>$50/ permonth</Text>
+                        <Text>{item.price}</Text>
                     </View>
                     <View style={styles.switchButton}>
                         <SwitchToggle
-                            switchOn={isEnabled}
-                            onPress={toggleSwitch}
+                            switchOn={check}
+                            onPress={() => toggleSwitch()}
                             containerStyle={{
                                 width: 36,
                                 height: 22,
@@ -60,7 +86,16 @@ const MarketingComponent = () => {
 
                 </View>
             </View>
-
+        )
+    }
+    return (
+        <View>
+            <FlatList
+                data={data}
+                renderItem={RenderItem}
+                keyExtractor={(item) => item.id}
+                style={styles.flatList}
+            />
             {/* Modal */}
             <View>
                 <BottomSheet
@@ -80,13 +115,13 @@ const MarketingComponent = () => {
                                     padding: 20,
                                     fontSize: 20,
                                 }}>
-                               Featured Listing
+                                Featured Listing
                             </Text>
                             <View>
                                 <Text>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Commodo erat tempor scelerisque sit adipiscing velit. 
-                                Commodo erat tempor scelerisque sit adipiscing velit.
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Commodo erat tempor scelerisque sit adipiscing velit.
+                                    Commodo erat tempor scelerisque sit adipiscing velit.
                                 </Text>
                             </View>
 
@@ -101,3 +136,42 @@ const MarketingComponent = () => {
 }
 
 export default MarketingComponent;
+
+
+const styles = StyleSheet.create({
+    marketing: {
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+
+    },
+    layout: {
+        padding: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0,
+        elevation: 1,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        borderRadius: 8
+    },
+    content: {
+        flexDirection: 'column'
+    },
+    switchButton: {
+        justifyContent: 'center',
+    },
+
+    bottomNavigationView: {
+        backgroundColor: '#fff',
+        width: '100%',
+        height: 250,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
+    },
+});

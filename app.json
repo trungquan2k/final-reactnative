@@ -1,32 +1,32 @@
 {
-  "expo": {
-    "name": "final-reactnative",
-    "slug": "final-reactnative",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/flash_screen.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "expo": {
+        "name": "final-reactnative",
+        "slug": "final-reactnative",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icons/icon.png",
+        "splash": {
+        "image": "./assets/images/logo_flash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+        "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+        "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+        "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "adaptiveIcon": {
+          "foregroundImage": "./assets/adaptive-icon.png",
+          "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+          "favicon": "./assets/favicon.png"
     }
   }
 }

@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet,FlatList } from 'react-native'
 import SwitchToggle from "react-native-switch-toggle";
-import { styles } from '../css/StyleFeature';
 import { Ionicons } from '@expo/vector-icons';
 
 
 const FeatureComponent = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-   
+
     const [active, setActive] = useState([1,2,3,6,8,9])
 
     const feature=[
@@ -79,7 +77,7 @@ const FeatureComponent = () => {
             name:'Waitlist',
         },
     ]
-
+    
     const RenderItem=({item})=>{
         const check = active.includes(item.id);
         const toggleSwitch = () =>{
@@ -89,20 +87,18 @@ const FeatureComponent = () => {
             }else{
                 setActive([...active,item.id]);
             }
-            console.log(active);
         }
-
         return(
             <View style={styles.feature}>
             <View style={[styles.layout,{justifyContent:'space-between'}]}>
-                <View style={{flexDirection:'row'}}>
+                <View 
+                style={styles.star}
+                >
                 <Ionicons
                         name={item.icon}
                         size={20}
                         color="black"
-                        style={
-                            styles.star
-                        } />
+                        />
                     <Text style={styles.text}>{item.name}</Text>
                 </View>     
                 <View style={styles.switchButton}>
@@ -146,4 +142,38 @@ const FeatureComponent = () => {
 }
 
 export default FeatureComponent;
+
+export const styles = StyleSheet.create({
+
+    feature: {
+        paddingTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    layout:{
+        padding:20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0,
+        elevation: 1,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        borderRadius: 8,
+        
+    },
+    star:{
+        flexDirection:'row'
+    },
+    text:{
+        fontSize:14,
+        marginHorizontal:10,
+    },
+    switchButton: {
+        justifyContent:'space-between',
+    },
+})
+
 

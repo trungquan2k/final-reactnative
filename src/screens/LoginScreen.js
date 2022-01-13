@@ -1,58 +1,50 @@
-
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet,TextInput, Text,TouchableOpacity, View, Image } from 'react-native'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { StyleSheet, TextInput, Text, TouchableOpacity, View, Image } from 'react-native'
 import { auth } from '../auth/firebase'
 
+import { Ionicons } from '@expo/vector-icons'
+import WButton from '../components/WButton'
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const [loading, setLoading] = useState(false)
+    const [hidePass, setHidePass] = useState(true);
+    // console.log(auth.currentUser)
+  
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                navigation.navigate("TabNavigation")
+                navigation.replace('TabNavigation');
             }
-        })
-        return unsubscribe
-    }, [])
+        });
+        return unsubscribe;
+    }, []);
 
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
+
+    const handleLogin = async () => {
+        setLoading(true)
+        await signInWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                // console.log('Registered with:', user.email);
+                setLoading(false)
             })
-            .catch(error => alert(error.message))
-    }
-
-    const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                // console.log('Logged in with:', user.email);
+            .catch(error => {
+                setLoading(false)
+                console.log(error.message)
+                alert(error?.message)
             })
-            .catch(error => alert(error.message))
     }
-    const image = {
-        uri: "https://i.ibb.co/HNDmKHP/logo-login.png",
-    };
     return (
         <View
             style={styles.container}
             behavior="padding"
         >
-            <View style={styles.backgroundImage}>
+            <View >
                 <Image
-                    style={{
-                        resizeMode: "contain",
-                        height: 40,
-                        width: 40,
-                        top:20,
-                        left:20,      
-                    }}
-                    source={image}
+                    style={styles.image}
+                    source={require("../../assets/images/logoapp.png")}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -61,50 +53,59 @@ const LoginScreen = ({ navigation }) => {
                     placeholder='Email'
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={styles.input}       
+                    style={styles.input}
                 />
                 <TextInput
                     placeholder="Password"
                     value={password}
                     onChangeText={text => setPassword(text)}
                     style={styles.input}
-                    secureTextEntry
-                    
+                    secureTextEntry={hidePass ? true : false}
                 />
-                <Text style={{textAlign:'right', color:"#DB147F", fontSize:14, marginTop:10}} onPress={()=>{navigation.navigate("ForgotPassword")}}>Forgot password?</Text>
+                <Ionicons
+                    style={styles.iconPass}
+                    name={hidePass ? 'ios-eye-off-outline' : 'ios-eye-outline'}
+                    size={20}
+                    color="grey"
+                    onPress={() => setHidePass(!hidePass)}
+                />
+                <Text style={styles.forgotPassword} onPress={() => { navigation.navigate("ForgotPassword") }}>Forgot password?</Text>
             </View>
-            
-            <View style={styles.buttonContainer}>
+            <WButton
+                loading={loading}
+                disabled={loading}
+                label="Login"
+                onPress={handleLogin}
+
+            />
+            {/* <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     onPress={handleLogin}
                     style={styles.button}
                 >
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={handleSignUp}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Register</Text>
-                </TouchableOpacity>
+            </View> */}
+            <View style={{}}>
+                {/* <Text>If you have trouble logging in to KindiCare CRM,{'\n'} please contact our Customer Care team.</Text> */}
             </View>
         </View>
     )
 }
 
-export default LoginScreen
+export default LoginScreen;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column'
     },
-    backgroundImage:{
-        width:80,
-        height:80,
-        backgroundColor:'rgba(146, 226, 169, 0.32)',
-        borderRadius:80,
+    image: {
+        resizeMode: "contain",
+        height: 80,
+        width: 80,
     },
     inputContainer: {
         width: '80%',
@@ -115,37 +116,20 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
-        borderColor:'gray',
-        borderWidth:1,
-        
+        borderColor: 'gray',
+        borderWidth: 1,
+
     },
-    buttonContainer: {
-        width: '80%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
+    forgotPassword: {
+        textAlign: 'right',
+        color: "#DB147F",
+        fontSize: 14,
+        marginTop: 10
     },
-    button: {
-        backgroundColor: '#DB147F',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    buttonOutlineText: {
-        color: '#0782F9',
-        fontWeight: '700',
-        fontSize: 16,
-    },
+    iconPass: {
+        position: 'absolute',
+        top: 75,
+        alignSelf:'flex-end',
+        right:10
+    }
 })
