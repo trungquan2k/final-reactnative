@@ -1,46 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import CenterContext from '../context/CenterContext';
+import { IconSummary } from '../components/IconSummary';
 
-const Summary=()=> {
+const Summary=({centerId})=> {
     const [active, setActive] = useState(false);
+    const centers=  useContext(CenterContext)
+    const {name, address,contact,date,description,kindService,outdoor}= centers.find(v=>v.id===centerId);
 
     const MainContent = () => (
         <>
-            <Text style={styles.contentTitle}>General Information</Text>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>221 Ferrars Street, South Melbourne, VIC 3205</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>Goodstart Early Learning</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>Centre-based Care</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>01 January 2012</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={[styles.contentText, { color: '#32A4FC', backgroundColor: '#E9F4FF', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }]}>KindiCare Basic</Text>
-            </View>
-            <Text style={styles.contentTitle}>Contact Info</Text>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>1300 001 154</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={styles.contentText}>goodstartearlylearning@gmail.com</Text>
-            </View>
-            <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                <Text style={[styles.contentText, { color: '#DB147F' }]}>https://www.goodstart.org.au/</Text>
-            </View>
+          <Text style={styles.contentTitle}>General Information</Text>
+           <IconSummary style={styles.contentText} value={`${address.LGA} ${address.Region}`} />
+           <IconSummary style={styles.contentText} value={name} />
+           <IconSummary style={styles.contentText} value={outdoor} />
+           <IconSummary style={styles.contentText} value={date} />
+           <Text style={styles.contentTitle}>Contact Info</Text>
+           <IconSummary style={styles.contentText} value={contact.phone} />
+           <IconSummary style={styles.contentText} value={contact.email} />
+           <IconSummary  style={[styles.contentText, { color: '#DB147F' }]} value={contact.website} />
             <Text style={styles.contentTitle}>Enquiries Summary</Text>
             <View style={[styles.contentRow, { justifyContent: 'space-between' }]}>
                 <View style={{ flexDirection: 'row' }}>
@@ -91,6 +70,7 @@ const Summary=()=> {
     );
 }
 export default Summary;
+
 
 const styles = StyleSheet.create({
     main: {

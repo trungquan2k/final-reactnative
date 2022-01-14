@@ -5,7 +5,7 @@ import { FontAwesome ,Ionicons} from '@expo/vector-icons';
 
 
 
-const ReviewUserComponent = (props) => {
+const ReviewUserComponent = ({title,subtitle,reviews}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
 
@@ -13,58 +13,18 @@ const ReviewUserComponent = (props) => {
         setIsOpen(value => !value);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
-    const data = [
-        {
-            id: 1,
-            avatar: 'https://reactjs.org/logo-og.png',
-            name: 'Hoang Trung Quan',
-            rating: 4,
-            subtitle: 'Google Review',
-            date: 'July 29, 2020',
-            message: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
-            image: [
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-                'http://mghoacuc.tptdm.edu.vn/uploads/mghoacuc/news/2017_04/img_3458.jpg',
-                'http://mghoacuc.tptdm.edu.vn/uploads/mghoacuc/news/2017_04/img_3458.jpg',
-                'http://mghoacuc.tptdm.edu.vn/uploads/mghoacuc/news/2017_04/img_3458.jpg',
-            ]
-        },
-        {
-            id: 2,
-            avatar: 'https://reactjs.org/logo-og.png',
-            name: 'Hoang Trung Quan',
-            rating: 4,
-            subtitle: 'Google Review',
-            date: 'July 29, 2020',
-            message: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
-            image: [
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'http://mghoacuc.tptdm.edu.vn/uploads/mghoacuc/news/2017_04/img_3458.jpg',
-                'https://abacusmaster.edu.vn/wp-content/uploads/2018/10/toan-tu-duy-1-27.jpg',
-                'https://afamilycdn.com/2019/7/7/capture-1562459163456860716620.png',
-            ]
-        },
-
-    ]
     const RenderItem = ({ item }) => {
         const full = 3;
+        const{ id,user_avatar,user_name,images,description,type,rating,created_at}= item;
         return (
             <View style={styles.userReview}>
                 <View style={{ flexDirection: 'row', }}>
                     <View>
-                        <Image source={{ uri: item.avatar }} style={styles.avatar} />
+                        <Image source={{ uri: user_avatar }} style={styles.user_avatar} />
                     </View>
                     <View style={styles.reviewer}>
                         <View style={styles.header}>
-                            <Text style={styles.text}>Hoang Trung Quan</Text>
+                            <Text style={styles.text}>{user_name}</Text>
                             <Ionicons
                                 name="star-outline"
                                 size={15}
@@ -89,19 +49,19 @@ const ReviewUserComponent = (props) => {
                                 } />
                         </View>
                         <View style={styles.footer}>
-                            <Text style={{ fontSize: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>{item.subtitle}</Text>
-                            <Text style={{ fontSize: 10 }}>{item.date}</Text>
+                            <Text style={{ fontSize: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>{type}</Text>
+                            <Text style={{ fontSize: 10 }}>{created_at}</Text>
                         </View>
                     </View>
                 </View>
                 <View>
                     <Text style={{ justifyContent: 'space-between', paddingVertical: 10 }}>
-                        {item.message}
+                        {description}
                     </Text>
                 </View>
                 <View style={styles.imageReview}>
                     {
-                        item.image.map((value, index, arr) => {
+                        images.map((value, index, arr) => {
 
                             if (index >= 0 && index < 3) {
                                 return (
@@ -154,7 +114,7 @@ const ReviewUserComponent = (props) => {
                         })
                     }
                     <Text style={{ position: 'absolute', right: 30, bottom: 30, color: 'white', fontSize: 16, fontWeight: 'bold' }}>
-                        {status ? "+" : ''} {status ? item.image.length - full : null}
+                        {status ? "+" : ''} {status ? images.length - full : null}
                     </Text>
                 </View>
                 <View
@@ -178,8 +138,8 @@ const ReviewUserComponent = (props) => {
                     />
                 </View>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{props.title}</Text>
-                    {!isOpen ? <Text style={styles.subtitle}>{props.subtitle}</Text> : <Text></Text>}
+                    <Text style={styles.title}>{title}</Text>
+                    {!isOpen ? <Text style={styles.subtitle}>{subtitle}</Text> : <Text></Text>}
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
                     {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
@@ -187,9 +147,9 @@ const ReviewUserComponent = (props) => {
             </View>
             <View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
                 <FlatList
-                    data={data}
+                    data={reviews}
                     renderItem={RenderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item,index) => `review${index}`}
                 />
             </View>
         </View>
@@ -269,7 +229,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         padding: 20,
     },
-    avatar: {
+    user_avatar: {
         height: 40,
         width: 40,
         borderRadius: 8,
@@ -294,7 +254,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
 
-    // config image
+    // config images
     imageReview: {
         flexDirection: 'row',
         flexWrap: 'wrap',

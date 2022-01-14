@@ -1,67 +1,41 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { getDetail } from '../../services';
+import CenterContext from '../context/CenterContext';
 
-const ServiceComponent=()=> {
-    const data = [
-        {
-            id: 1,
-            imgUri: "https://i.ibb.co/3kX4vCy/icon.png",
-            title: "Long Day Care",
-            subtile: "0 to 12 months",
-            money: "$112.00 /full day"
-        },
-        {
-            id: 2,
-            imgUri: "https://i.ibb.co/k85FjrG/icon1.png",
-            title: "Pre-School/ Kindergarten",
-            subtile: "0 to 12 months",
-            money: "$112.00 /full day"
-        },
-        {
-            id: 3,
-            imgUri: "https://i.ibb.co/nmZX5zP/icon2.png",
-            title: "Before & After School Care",
-            subtile: "0 to 12 months",
-            money: "$112.00 /full day"
-        },
-        {
-            id: 4,
-            imgUri: "https://i.ibb.co/ssp4GPP/icon3.png",
-            title: "Family Day Care",
-            subtile: "0 to 12 months",
-            money: "$112.00 /full day"
-        },
-        {
-            id: 5,
-            imgUri: "https://i.ibb.co/RHvbgJR/icon4.png",
-            title: "Vacation Care",
-            subtile: "0 to 12 months",
-            money: "$112.00 /full day"
-        }
-    ]
-
-    const renderItem = ({ item }) => (
-        <View style={styles.service}>
-        <View style={styles.body}>
-            <Image
-                source={{ uri: item.imgUri }}
-                style={styles.icon}
-            />
-            <View style={styles.content}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.subtitle}>{item.subtile}</Text>
-                <Text style={styles.money}>{item.money}</Text>
+const ServiceComponent=({centerId})=> {
+    const [services,setServices] =useState([])
+    const centers = useContext(CenterContext);
+    useEffect(async ()=>{
+        setServices(getDetail(centers,centerId,"services")); 
+    },[]);
+    const renderItem = ({ item}) =>{
+        const {icon,title,description,time}=item
+        return  (
+            <View style={styles.service}>
+            <View style={styles.body}>
+                <Image
+                    source={{ uri: icon }}
+                    style={styles.icon}
+                />
+                <View style={styles.content}>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.subtitle}>{time}</Text>
+                    <Text style={styles.description}>{description}</Text>
+                </View>
             </View>
+    
         </View>
-
-    </View>
-    );
+        );
+    }
     return (
-        <FlatList
-            data={data}
+        <View>
+        {services.length?<FlatList
+            data={services}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
-        />
+            keyExtractor={(item,index) => `services${index}`}
+        />:<Text> Loading</Text>}
+        </View>
     )
 }
 
@@ -100,7 +74,7 @@ const styles = StyleSheet.create({
         color: 'black',
         paddingVertical: 4,
     },
-    money: {
+    description: {
         color: 'black',
         paddingVertical: 4,
     },

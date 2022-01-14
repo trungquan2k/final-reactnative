@@ -4,8 +4,7 @@ import { FontAwesome,Ionicons } from "@expo/vector-icons";
 import CardContentDashBoard from "../components/CardContentDashBoard";
 
 
-const Dashboard = () => {
-    const navigation = useNavigation();
+const Dashboard = ({navigation}) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.roundCorner} >

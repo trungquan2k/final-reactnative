@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext} from 'react';
 import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Summary from './SummaryScreen';
@@ -9,39 +9,39 @@ import ServiceComponent from '../components/ServiceComponent';
 import MarketingComponent from '../components/MarketingComponent';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
+import { TAB_DETAIL_LABEL } from './constants';
+import RatingAndServiceComponent from '../components/RatingandServiceComponent';
 
 
 
-const CentreDetails = ({navigation}) => {
+const CentreDetails  =  ({route})=> {
     const [active, setActive] = useState('SUMMARY');
+    const navigation = useNavigation();
+    const {centerId}= route.params;
     return (
-        <View style={{ flex: 1 }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <Ionicons style={styles.headerBack} name="arrow-back-sharp" size={20} color="#857E7F" />
+                        <Ionicons onPress={() => navigation.goBack()} style={styles.headerBack} name="arrow-back-sharp" size={20} color="#857E7F" />
                     <Text style={styles.headerTitle}>Centre Details</Text>
                 </View>
-            </TouchableOpacity>
-            <View>
-                <ScrollView contentContainerStyle={styles.tabPane} horizontal={true} showsHorizontalScrollIndicator={false}>
-                    <Text onPress={() => { setActive('SUMMARY') }} style={[styles.tabItem, { color: active == 'SUMMARY' ? '#DB147F' : '#857E7F' }]}>SUMMARY</Text>
-                    <Text onPress={() => { setActive('INFORMATION') }} style={[styles.tabItem, { color: active == 'INFORMATION' ? '#DB147F' : '#857E7F' }]}>CENTRE INFORMATION</Text>
-                    <Text onPress={() => { setActive('HOURS') }} style={[styles.tabItem, { color: active == 'HOURS' ? '#DB147F' : '#857E7F' }]}>HOURS</Text>
-                    <Text onPress={() => { setActive('SERVICES') }} style={[styles.tabItem, { color: active == 'SERVICES' ? '#DB147F' : '#857E7F' }]}>SERVICES</Text>
-                    <Text onPress={() => { setActive('FEATURES') }} style={[styles.tabItem, { color: active == 'FEATURES' ? '#DB147F' : '#857E7F' }]}>FEATURES</Text>
-                    <Text onPress={() => { setActive('REVIEWS') }} style={[styles.tabItem, { color: active == 'REVIEWS' ? '#DB147F' : '#857E7F' }]}>RATINGS AND REVIEWS</Text>
-                    <Text onPress={() => { setActive('MARKETING') }} style={[styles.tabItem, { color: active == 'MARKETING' ? '#DB147F' : '#857E7F' }]}>MARKETING</Text>
-                </ScrollView>
-            </View>
-            {active == 'SUMMARY' ? <Summary /> : null}
-            {active == 'INFORMATION' ? <Information /> : null}
-            {active == 'HOURS' ? <HoursComponents /> : null}
-            {active == 'FEATURES' ? <FeatureComponent /> : null}
-            {active == 'SERVICES' ? <ServiceComponent /> : null}
-            {active == 'REVIEWS' ? <RatingAndServiceComponent /> : null}
-            {active == 'MARKETING' ? <MarketingComponent /> : null}
 
-        </View>
+                <View>
+                    <ScrollView contentContainerStyle={styles.tabPane} horizontal={true} showsHorizontalScrollIndicator={false}>
+                        {Object.keys(TAB_DETAIL_LABEL)?.map((nameValue,index)=>
+                        <Text key={index} onPress={() => { setActive(TAB_DETAIL_LABEL[nameValue].label) }} style={[styles.tabItem, { color: active == TAB_DETAIL_LABEL[nameValue].label ? '#DB147F' : '#857E7F' }]}>
+                        {TAB_DETAIL_LABEL[nameValue].text}
+                        </Text>)}
+                    </ScrollView>
+                </View>
+                
+                {active == TAB_DETAIL_LABEL.SUMMARY.label&& <Summary centerId={centerId} />  }
+                {active == TAB_DETAIL_LABEL.INFORMATION.label && <Information  centerId={centerId}  />  }
+                {active == TAB_DETAIL_LABEL.HOURS.label&& <HoursComponents centerId={centerId}   /> }
+                {active == TAB_DETAIL_LABEL.FEATURES.label && <FeatureComponent centerId={centerId}   />  }
+                {active == TAB_DETAIL_LABEL.SERVICES.label && <ServiceComponent  centerId={centerId}   />  }
+                {active == TAB_DETAIL_LABEL.REVIEWS.label && <RatingAndServiceComponent  centerId={centerId}   />  }
+                {active == TAB_DETAIL_LABEL.MARKETING.label && <MarketingComponent centerId={centerId}   />  }
+            </View>
     );
 }
 

@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Switch, ScrollView, TouchableOpacity, Image, FlatList, Modal, Pressable } from 'react-native';
 import { Ionicons, AntDesign, Entypo, EvilIcons, FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Searchbar, RadioButton } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-
+import {getGeneralInfo} from '../../services.js';
+import CenterContext from '../context/CenterContext';
 
 
 const Centres=({navigation})=> {
     const [visible, setVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [checked, setChecked] = useState('item1');
-
-    const data = [
-        { id: 1, name: 'nam' },
-        { id: 2, name: 'nam2' },
-        { id: 3, name: 'nam2' },
-        { id: 4, name: 'nam2' },
-    ];
+    const centers= useContext(CenterContext)
     const Header = () => {
         return (
             <View style={styles.searchBar}>
@@ -35,51 +29,60 @@ const Centres=({navigation})=> {
                 <TouchableOpacity style={styles.searchBarFilter}>
                     <Ionicons name="ios-filter-outline" size={20} color="#ABA7A7" />
                 </TouchableOpacity>
+               
             </View>
         )
     }
 
-    const Item = () => (
+    const Item = ({item}) => {
+        const {id,name, address,kindService,children,waitlisted,services} = item;
+        const servicesNumber=services.length;
+
+        return(
         <View style={styles.itemBox}>
             <Text style={styles.itemPoint}>9.8</Text>
             <Image style={styles.itemLogo} source={require('../../assets/images/logo.png')} />
-            <TouchableOpacity onPress={()=>{navigation.navigate("CentreDetails")}}>
+            <TouchableOpacity onPress={()=>{navigation.navigate("CentreDetails",{centerId:id})}}>
                 <View style={{ overflow: 'hidden' }}>
                     <Image source={require('../../assets/images/avatar.jpg')} style={styles.itemImg} />
                 </View>
             </TouchableOpacity>
             <View style={styles.itemBody}>
-                <Text style={styles.itemTitle}>Castle Hill Montessori Academy</Text>
+                <Text style={styles.itemTitle}>{name}</Text>
                 <View style={[styles.itemInfo, { width: '100%' }]}>
                     <Image source={require('../../assets/icons/ic-map.png')} />
-                    <Text style={{ marginLeft: 6 }}>1 Kerrs Road, Castle Hill, NSW 2154</Text>
+                    <Text style={{ marginLeft: 6 }}>{address.LGA} {address.Region}</Text>
                 </View>
                 <View style={styles.itemRow}>
                     <View style={styles.itemInfo}>
                         <Image source={require('../../assets/icons/ic-baby.png')} />
-                        <Text style={{ marginLeft: 6 }}>90 childrens</Text>
+                        <Text style={{ marginLeft: 6 }}>{children} children</Text>
                     </View>
                     <View style={styles.itemInfo}>
                         <Image source={require('../../assets/icons/ic-wailist.png')} />
-                        <Text style={{ marginLeft: 6 }}>48 waitlisted</Text>
+                        <Text style={{ marginLeft: 6 }}>{waitlisted} waitlisted</Text>
                     </View>
                 </View>
                 <View style={styles.itemRow}>
                     <View style={styles.itemInfo}>
                         <Image source={require('../../assets/icons/ic-Kindi.png')} />
-                        <Text style={styles.itemText}>KindiCare Basic</Text>
+                        <Text style={styles.itemText}>{kindService}</Text>
                     </View>
                     <View style={styles.itemInfo}>
                         <Image source={require('../../assets/icons/ic-service.png')} />
-                        <Text style={{ marginLeft: 6 }}>4 services</Text>
+                        <Text style={{ marginLeft: 6 }}>{servicesNumber} services</Text>
                     </View>
                 </View>
             </View>
         </View>
     )
-
+        }
+    if(!centers.length) return (
+        <View style={{flex:1,alignContent:'center'}} >
+            <Text >Loading......</Text>
+        </View> )
     return (
-        <View style={styles.container}>
+        <View style={styles.container} > 
             <StatusBar style='light' />
             <View style={styles.header}>
                 <Pressable style={styles.headerSelect} onPress={() => setVisible(true)}>
@@ -240,14 +243,16 @@ const Centres=({navigation})=> {
                 </View>
             </ScrollView>
             <FlatList
-                data={data}
+                data={getGeneralInfo(centers)}
                 renderItem={Item}
                 keyExtractor={item => item.id}
                 ListHeaderComponent={Header}
                 style={styles.body}
                 showsVerticalScrollIndicator={false}
             />
+      
         </View>
+        
     );
 }
 export default Centres;

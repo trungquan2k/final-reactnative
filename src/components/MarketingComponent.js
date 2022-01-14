@@ -1,45 +1,35 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import SwitchToggle from "react-native-switch-toggle";
 import { Ionicons } from '@expo/vector-icons';
 import { BottomSheet } from 'react-native-btr';
-
-const MarketingComponent = () => {
+import CenterContext from '../context/CenterContext';
+import { getMarketings,getDetail } from '../../services';
+ 
+const MarketingComponent = ({centerId}) => {
+    const [allMarketings, setMarketings] =useState([]);
+    const [active, setActive] = useState([])
     const [visible, setVisible] = useState(false);
     const toggleBottomNavigationView = () => {
         setVisible(!visible);
     };
-    const [active, setActive] = useState([1, 2])
+    const centers = useContext(CenterContext);
+    useEffect(async ()=>{
+        const marketings= await getMarketings();
+        setMarketings([...marketings]);
+        setActive([...getDetail(centers,centerId,"marketing")]); 
 
-    const data = [
-        {
-            id: 1,
-            name: 'Featured Listing',
-            icon: 'information-circle',
-            price: "$" + 50 + "/per month"
-        },
-        {
-            id: 2,
-            name: 'Featured Listing',
-            icon: 'information-circle',
-            price: "$" + 50 + "/per month"
-        },
-        {
-            id: 3,
-            name: 'Featured Listing',
-            icon: 'information-circle',
-            price: "$" + 50 + "/per month"
-        }
-    ]
+    },[]);
 
     const RenderItem = ({ item }) => {
-        const check = active.includes(item.id);
+        const {price,id,name,description,icon} = item;
+        const check = active.includes(id);
         const toggleSwitch = () => {
             if (check) {
-                active.splice(active.indexOf(item.id), 1);
+                active.splice(active.indexOf(id), 1);
                 setActive([...active]);
             } else {
-                setActive([...active, item.id]);
+                setActive([...active, id]);
             }
         }
         return (
@@ -49,15 +39,15 @@ const MarketingComponent = () => {
                         <View style={{
                             flexDirection: 'row'
                         }}>
-                            <Text>{item.name}</Text>
+                            <Text>{name}</Text>
                             <TouchableOpacity
                                 onPress={() => toggleBottomNavigationView()}
                             >
-                                <Ionicons name={item.icon} size={14} color="#857E7F" />
+                                <Ionicons name={icon} size={14} color="#857E7F" />
                             </TouchableOpacity>
 
                         </View>
-                        <Text>{item.price}</Text>
+                        <Text>{` $ ${price}/per month`}</Text>
                     </View>
                     <View style={styles.switchButton}>
                         <SwitchToggle
@@ -91,9 +81,9 @@ const MarketingComponent = () => {
     return (
         <View>
             <FlatList
-                data={data}
+                data={allMarketings}
                 renderItem={RenderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item,index) => `marketings${index}`}
                 style={styles.flatList}
             />
             {/* Modal */}

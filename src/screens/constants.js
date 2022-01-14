@@ -12,30 +12,37 @@ export const MORE_INFO=[
 export const TAB_DETAIL_LABEL= {
     SUMMARY:{
         label:"SUMMARY",
-        text:"SUMMARY"
+        text:"SUMMARY",
+        fieldName:"summary"
     },
     INFORMATION:{
         label:"INFORMATION",
-        text:"CENTRE INFORMATION"
+        text:"CENTRE INFORMATION",
+        fieldName:"information"
     },
     HOURS:{
         label:"HOURS",
-        text:"HOURS"
+        text:"HOURS",
+        fieldName:"hours"
     },
     SERVICES:{
         label:"SERVICES",
-        text:"SERVICES"
+        text:"SERVICES",
+        fieldName:"services"
     },
     FEATURES:{
         label:"FEATURES",
-        text:"FEATURES"
+        text:"FEATURES",
+        fieldName:"features"
     },
     REVIEWS:{
         label:"REVIEWS",
-        text:"RATINGS AND REVIEWS"
+        text:"RATINGS AND REVIEWS",
+        fieldName:""
     },
     MARKETING:{
         label:"MARKETING",
-        text:"MARKETING"
+        text:"MARKETING",
+        fieldName:"marketing"
     }
 }

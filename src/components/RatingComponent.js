@@ -6,7 +6,7 @@ import DoubleSlider from './DoubleSlider';
 
 
 
-const RatingComponent = (props) => {
+const RatingComponent = ({title,subtitle,description,rate,average_rate}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(value => !value);
@@ -22,15 +22,15 @@ const RatingComponent = (props) => {
                     />
                 </View>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{props.title}</Text>
-                    <Text style={styles.subtitle}>{props.subtitle}</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.subtitle}>{subtitle}</Text>
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
                     {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
                 </TouchableOpacity>
             </View>
             <View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
-                <DoubleSlider />
+                <DoubleSlider rate={rate} description={description} average_rate={average_rate} />
             </View>
         </View>
     );
