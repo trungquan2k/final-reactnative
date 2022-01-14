@@ -46,7 +46,9 @@ const MarketingComponent = () => {
             <View style={styles.marketing}>
                 <View style={styles.layout}>
                     <View style={styles.content}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{
+                            flexDirection: 'row'
+                        }}>
                             <Text>{item.name}</Text>
                             <TouchableOpacity
                                 onPress={() => toggleBottomNavigationView()}

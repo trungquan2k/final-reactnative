@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 
 
-export default function HoursComponents() {
+const HoursComponents=()=> {
     const [activeButton, setActiveButton] = useState('')
-
 
     const data = [
         {
@@ -51,8 +50,8 @@ export default function HoursComponents() {
     const renderItem = ({ item }) => (
         <View style={styles.container}>
             <View style={styles.content}>
-                <View style={styles.title}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 16, color: "#2D1F21", paddingVertical: 10 }}>{item.title}</Text>
+                <View>
+                    <Text style={styles.title}>{item.title}</Text>
                 </View>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => { }} style={styles.button}>
@@ -111,6 +110,7 @@ export default function HoursComponents() {
     )
 }
 
+export default HoursComponents;
 const styles = StyleSheet.create({
     container: {
         padding: 10,

@@ -3,7 +3,6 @@ import { View, Text, SafeAreaView, StyleSheet, Switch, ScrollView, TouchableOpac
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth } from "../auth/firebase";
 
-
 const More=({ navigation })=> {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);

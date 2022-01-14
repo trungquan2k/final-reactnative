@@ -5,6 +5,7 @@ import CardContentDashBoard from "../components/CardContentDashBoard";
 
 
 const Dashboard = () => {
+    const navigation = useNavigation();
     return (
         <ScrollView style={styles.container}>
             <View style={styles.roundCorner} >
