@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Modal, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/native";
-function ForgotPasswordScreen() {
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../auth/firebase";
+
+const ForgotPasswordScreen = ({ navigation }) => {
+
     const [email, setEmail] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
 
-    const image = {
-        uri: "https://i.ibb.co/HNDmKHP/logo-login.png",
+
+    const forgotPassword = (Email) => {
+        setModalVisible(false)
+        sendPasswordResetEmail(auth, Email, null)
+            .then(() => {
+                setModalVisible(true)
+                // alert("reset email sent to " + Email);
+            })
+            .catch(function (e) {
+                setModalVisible(false)
+            });
     };
-    const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <View style={{paddingVertical:20}}>
-                <Ionicons name={'arrow-back-outline'} size={25} color="#857E7F" onPress={() => { navigation.goBack() }} />  
+            <View style={{ paddingVertical: 20 }}>
+                <Ionicons name={'arrow-back-outline'} size={25} color="#857E7F" onPress={() => { navigation.goBack() }} />
             </View>
             <Text style={styles.title}>Forgot Password</Text>
             <Text style={styles.subtitle}>Please enter your email address to get reset link</Text>
@@ -25,7 +36,7 @@ function ForgotPasswordScreen() {
                 style={styles.input}
             />
             <TouchableOpacity
-                onPress={() => setModalVisible(true)}
+                onPress={() => forgotPassword(email)}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>Get Reset Link</Text>
@@ -45,12 +56,11 @@ function ForgotPasswordScreen() {
                             <Image
                                 style={{
                                     resizeMode: "contain",
-                                    height: 40,
-                                    width: 40,
-                                    top: 20,
-                                    left: 20,
+                                    height: 80,
+                                    width: 80,
+
                                 }}
-                                source={image}
+                                source={require('../../assets/images/logoapp.png')}
                             />
                         </View>
                         <Text style={styles.title}>Success</Text>
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         width: 80,
         height: 80,
-        backgroundColor: 'rgba(146, 226, 169, 0.32)',
+
         borderRadius: 80,
     },
     buttonText: {
@@ -127,5 +137,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ForgotPasswordScreen
+export default ForgotPasswordScreen;
 

@@ -1,8 +1,11 @@
+
+import { LogBox } from 'react-native';
 import StackNavigation from './src/navigations/StackNavigation';
 
-import { createStackNavigator } from "@react-navigation/stack";
+LogBox.ignoreAllLogs()
 
 const App = () => {
+
   return (
     <StackNavigation />
   );
