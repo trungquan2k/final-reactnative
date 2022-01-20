@@ -37,7 +37,6 @@ const CardContentDashBoard = (props) => {
                 </View>
             </View>
         </View>
-
     )
 }
 
@@ -46,7 +45,8 @@ export default CardContentDashBoard
 const styles = StyleSheet.create({
     viewContent: {
         padding: 20,
-
+        height:200,
+        marginBottom:30
     },
     card: {
         shadowColor: "#000",
@@ -67,13 +67,12 @@ const styles = StyleSheet.create({
         borderBottomColor: '#DB147F',
         borderRadius: 16,
         //position
-        position: 'relative',
-        bottom: 60,
-        // top:-60,
+        position:'absolute',
+        top:-30,
+        justifyContent:'center',
+        left:20,
         padding: 16,
         alignItems: 'center',
-        zIndex: 2
-
     },
     leftCart: {
         flex: 1,
