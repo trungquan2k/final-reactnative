@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { StyleSheet, TextInput, Text, TouchableOpacity, View, Image } from 'react-native'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { StyleSheet, TextInput, Text, TouchableOpacity, View, Image, ToastAndroid } from 'react-native'
 import { auth } from '../auth/firebase'
-
 import { Ionicons } from '@expo/vector-icons'
-import WButton from '../components/WButton'
+import AsyncStorageLib from '@react-native-async-storage/async-storage'
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [hidePass, setHidePass] = useState(true);
-    // console.log(auth.currentUser)
-  
+    const [errors, setErrors] = useState('');
+    
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -22,22 +21,44 @@ const LoginScreen = ({ navigation }) => {
         return unsubscribe;
     }, []);
 
+    const checkError = (err) => {
+        switch (err) {
+            case 'auth/missing-email':
+                setErrors('Email is required');
+                break;
+            case 'auth/invalid-email':
+                setErrors('Invalid email');
+                break;
+            case 'auth/internal-error':
+                setErrors('Password is required');
+                break;
+            case 'auth/user-not-found':
+                setErrors('User not found');
+                break;
+            case 'auth/wrong-password':
+                setErrors('Incorrect password');
+                break;
+            default:
+                break;
+        }
+    };
 
-    // handle Signup with firebase
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-            })
-            .catch(error => alert(error.message))
+    const handleLogin = async () => {
+        try {
+            setLoading(true);
+            const users = await signInWithEmailAndPassword(auth, email, password);
+            const token = users.user.getIdToken();
+            if (users) {
+                setLoading(false);
+                await AsyncStorageLib.setItem('token', token);
+            }
+        } catch (error) {
+            setLoading(false)
+            checkError(error.code);
+            ToastAndroid.show(errors, ToastAndroid.SHORT);
+        }
     }
-
-    const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-            })
-    }
+    
     return (
         <View
             style={styles.container}
@@ -50,20 +71,25 @@ const LoginScreen = ({ navigation }) => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <TextInput
-                    label="Email"
-                    placeholder='Email'
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry={hidePass ? true : false}
-                />
+                <View style={styles.input}>
+                    <Text styles={styles.label}>Email</Text>
+                    <TextInput
+                        label="Email"
+                        placeholder='Enter Your Email'
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                    />
+                </View>
+                <View style={styles.input}>
+                    <Text styles={styles.label}>Password</Text>
+                    <TextInput
+                        placeholder="Enter Your Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+
+                        secureTextEntry={hidePass ? true : false}
+                    />
+                </View>
                 <Ionicons
                     style={styles.iconPass}
                     name={hidePass ? 'ios-eye-off-outline' : 'ios-eye-outline'}
@@ -73,23 +99,21 @@ const LoginScreen = ({ navigation }) => {
                 />
                 <Text style={styles.forgotPassword} onPress={() => { navigation.navigate("ForgotPassword") }}>Forgot password?</Text>
             </View>
-            <WButton
-                loading={loading}
+            <TouchableOpacity
                 disabled={loading}
-                label="Login"
+                activeOpacity={0.8}
+                style={styles.button}
                 onPress={handleLogin}
-
-            />
-            {/* <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
+            >
+                {loading ? (
+                    <Text style={{ color: "white" }}>{'...Loading'}</Text>
+                ) : (
                     <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-            </View> */}
-            <View style={{}}>
-                {/* <Text>If you have trouble logging in to KindiCare CRM,{'\n'} please contact our Customer Care team.</Text> */}
+                )}
+
+            </TouchableOpacity>
+            <View>
+                <Text style={styles.contextFooter}>If you have trouble logging in to KindiCare CRM,{'\n'} please contact our Customer Care team. </Text>
             </View>
         </View>
     )
@@ -128,39 +152,37 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginTop: 10
     },
-    buttonContainer: {
-        width: '80%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
+    iconPass: {
+        position: 'absolute',
+        top: 113,
+        alignSelf: 'flex-end',
+        right: 10
+    },
+    contextFooter: {
+        position: 'absolute',
+        top: 160,
+        left: -150,
+        alignItems: 'flex-end',
+        textAlign: 'center',
+        letterSpacing: 0.02,
+        fontSize: 14,
+        lineHeight: 24
+    },
+    label: {
+        fontSize: 12,
+        lineHeight: 16
     },
     button: {
         backgroundColor: '#DB147F',
-        width: '100%',
+        width: '80%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-    },
-    buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
+        marginTop: 10
     },
     buttonText: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    buttonOutlineText: {
-        color: '#0782F9',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    iconPass: {
-        position: 'absolute',
-        top: 75,
-        alignSelf:'flex-end',
-        right:10
+        color: "white",
+        fontSize: 14,
+        lineHeight: 24
     }
 })

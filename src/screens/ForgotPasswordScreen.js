@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Modal, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../auth/firebase";
 
-import { auth } from '../auth/firebase'
-import sendPasswordResetEmail from "firebase/auth";
 const ForgotPasswordScreen = ({ navigation }) => {
-
 
     const [email, setEmail] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-
-    const forgotPassword = () => {
-        console.log("reset email sent to " + email);
-        sendPasswordResetEmail(email)
+    const forgotPassword = (Email) => {
+        setModalVisible(false)
+        setLoading(true)
+        sendPasswordResetEmail(auth, Email, null)
             .then(() => {
-                alert("reset email sent to " + email);
+                setModalVisible(true);
+                setLoading(false);
             })
             .catch(function (e) {
-                console.log(e);
+                setLoading(false);
+                setModalVisible(false);
             });
     };
     return (
@@ -28,19 +30,28 @@ const ForgotPasswordScreen = ({ navigation }) => {
             </View>
             <Text style={styles.title}>Forgot Password</Text>
             <Text style={styles.subtitle}>Please enter your email address to get reset link</Text>
-            <TextInput
-                label="Forgot password"
-                placeholder='Enter your email'
-                value={email}
-                onChangeText={text => setEmail(text)}
-                style={styles.input}
-            />
+            <View style={styles.input}>
+                <Text styles={styles.label}>Email</Text>
+                <TextInput
+                    label="Forgot password"
+                    placeholder='Enter your email'
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                />
+            </View>
+
             <TouchableOpacity
-                // onPress={() => setModalVisible(true)}
-                onPress={forgotPassword}
+                disabled={loading}
+                activeOpacity={0.8}
                 style={styles.button}
+                onPress={() => forgotPassword(email)}
             >
-                <Text style={styles.buttonText}>Get Reset Link</Text>
+                {loading ? (
+                    <Text style={{ color: "white" }}>{'...Loading'}</Text>
+                ) : (
+                    <Text style={styles.buttonText}>Get Reset Link</Text>
+                )}
+
             </TouchableOpacity>
             <Modal
                 animationType="slide"
@@ -65,12 +76,12 @@ const ForgotPasswordScreen = ({ navigation }) => {
                             />
                         </View>
                         <Text style={styles.title}>Success</Text>
-                        <Text style={styles.subtitle}>Reset link has been sent to {email}</Text>
+                        <Text style={styles.subtitle}>Reset link has been sent to "{email}"</Text>
                         <TouchableOpacity
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.textStyle}>Ok</Text>
+                            <Text style={styles.textLight}>Ok</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -135,8 +146,10 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 14,
         lineHeight: 24
+    },
+    textLight: {
+        color: 'white'
     }
 });
 
 export default ForgotPasswordScreen;
-
