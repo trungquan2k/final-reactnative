@@ -11,7 +11,7 @@ const textTransformerTimes = (value) => {
         ? "10"
         : (value < 11 ? value : value - 10);
 };
-const DoubleSlider = () => {
+const DoubleSlider = ({average_rate,rate,description}) => {
     const { min, max } = VALUES; 
     const [selected, setSelected] = useState(null);
     if (!selected) {
@@ -66,8 +66,7 @@ const DoubleSlider = () => {
             </View>
             <View>
                 <Text style={styles.textContent}>
-                The KindiCare Rating for this service of <Text style={{color:'#32A4FC'}}>{selected}</Text>  is lower than the average 
-                KindiCare Rating for the area of <Text style={{color:'#32A4FC'}}>{selected}</Text>, and represents the good quality of service provided
+                {description}
                 </Text>
             </View>
         </View>

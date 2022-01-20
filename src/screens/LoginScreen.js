@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { StyleSheet, TextInput, Text, TouchableOpacity, View, Image } from 'react-native'
 import { auth } from '../auth/firebase'
 
@@ -23,17 +23,19 @@ const LoginScreen = ({ navigation }) => {
     }, []);
 
 
-    const handleLogin = async () => {
-        setLoading(true)
-        await signInWithEmailAndPassword(auth, email, password)
+    // handle Signup with firebase
+    const handleSignUp = () => {
+        createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                setLoading(false)
             })
-            .catch(error => {
-                setLoading(false)
-                console.log(error.message)
-                alert(error?.message)
+            .catch(error => alert(error.message))
+    }
+
+    const handleLogin = () => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
             })
     }
     return (
@@ -125,6 +127,35 @@ const styles = StyleSheet.create({
         color: "#DB147F",
         fontSize: 14,
         marginTop: 10
+    },
+    buttonContainer: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    button: {
+        backgroundColor: '#DB147F',
+        width: '100%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    buttonOutline: {
+        backgroundColor: 'white',
+        marginTop: 5,
+        borderColor: '#0782F9',
+        borderWidth: 2,
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    buttonOutlineText: {
+        color: '#0782F9',
+        fontWeight: '700',
+        fontSize: 16,
     },
     iconPass: {
         position: 'absolute',

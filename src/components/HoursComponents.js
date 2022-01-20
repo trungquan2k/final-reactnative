@@ -1,113 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import CenterContext from '../context/CenterContext';
 
 
-const HoursComponents = () => {
-    const [activeButton, setActiveButton] = useState('1')
+const HoursComponents=({centerId})=> {
+    const [activeButton, setActiveButton] = useState('')
+    const centers=  useContext(CenterContext);
+    const {hours}= centers.find(v=>v.id===centerId);
 
-    const data = [
-        {
-            id: '1',
-            title: "Normal",
-            monday: "Mon-Fri",
-            sat: "Sat",
-            sun: "Sun",
-            morning: "Morning",
-            hourMorning: "8:00",
-            hourAfternoon: "12:00",
-            afternoon: "Afternoon",
-            hoursMorning: "8:00",
-            hoursAfternoon: "12:00"
-        },
-        {
-            id: '2',
-            title: "School Term",
-            monday: "Mon-Fri",
-            sat: "Sat",
-            sun: "Sun",
-            morning: "Morning",
-            hourMorning: "8:00",
-            hourAfternoon: "12:00",
-            afternoon: "Afternoon",
-            hoursMorning: "8:00",
-            hoursAfternoon: "12:00"
-        },
-        {
-            id: '3',
-            title: "School Holidays",
-            monday: "Mon-Fri",
-            sat: "Sat",
-            sun: "Sun",
-            morning: "Morning",
-            hourMorning: "8:00",
-            hourAfternoon: "12:00",
-            afternoon: "Afternoon",
-            hoursMorning: "8:00",
-            hoursAfternoon: "12:00"
-        }
-    ]
-    const object = data.find(x => x.id === activeButton);
-    console.log(object);
+    const Hour = ({title, item }) => {
 
-    const renderItem = ({ item }) => {
-
-        const activeHandle = (id) => {
-            console.log(id)
-            if(id==='1'){
-                setActiveButton('1')
-            }
-        }
+        const  {Mon_Fri,Sat,Sun}= item;
+        
         return (
             <View style={styles.container}>
                 <View style={styles.content}>
                     <View>
-                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={styles.title}>{title}</Text>
                     </View>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.monday}</Text>
+                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                            <Text style={styles.textLight}>Mon-Fri</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.sat}</Text>
+                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                            <Text style={styles.textLight}>Sat</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { activeHandle(item.id) }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>{item.sun}</Text>
+                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                            <Text style={styles.textLight}>Sun</Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity onPress={() => { setActiveButton('2') }} style={activeButton === '2' ? styles.btnSelected : styles.btnNotSelected}>
-                            <Text style={styles.textLight}>{item.sat}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setActiveButton('3') }} style={activeButton === '3' ? styles.btnSelected : styles.btnNotSelected}>
-                            <Text style={styles.textLight}>{item.sun}</Text>
-                        </TouchableOpacity> */}
                     </View>
                     <View style={styles.body}>
                         <View style={styles.bodyLeft}>
-                            <Text style={styles.textDark}>{item.morning}</Text>
+                            <Text style={styles.textDark}>Morning</Text>
                             <View style={{ flexDirection: "row" }}>
-                                <Text style={styles.hours}>{item.hourMorning}</Text>
-                                <Text style={styles.hours}>{item.hourAfternoon}</Text>
+                                <Text style={styles.hours}>{Mon_Fri.morning.start}</Text>
+                                <Text style={styles.hours}>{Mon_Fri.morning.end}</Text>
                             </View>
                         </View>
                         <View >
-                            <Text style={styles.textDark}>{item.afternoon}</Text>
+                            <Text style={styles.textDark}>Afternoon</Text>
                             <View style={{ flexDirection: "row" }}>
-                                <Text style={styles.hours}>{item.hoursMorning}</Text>
-                                <Text style={styles.hours}>{item.hoursAfternoon}</Text>
+                                <Text style={styles.hours}>{Mon_Fri.afternoon.start}</Text>
+                                <Text style={styles.hours}>{Mon_Fri.afternoon.end}</Text>
                             </View>
                         </View>
-
+    
                     </View>
                 </View>
             </View>
-        )
-    };
+        );
+    }
 
     return (
-        <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-        />
+        <> 
+        <Hour title="Normal" item={hours.normal} />
+        <Hour title="School Holidays" item={hours.holidays} />
+        <Hour title="School Term" item={hours.term} />
+        </>
     )
 }
 

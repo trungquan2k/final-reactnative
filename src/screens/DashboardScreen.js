@@ -4,7 +4,7 @@ import { FontAwesome,Ionicons } from "@expo/vector-icons";
 import CardContentDashBoard from "../components/CardContentDashBoard";
 
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.roundCorner} >
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         elevation: 0,
         padding: 20,
-
+        
     },
     logo: {
         position: 'absolute',

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Modal, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../auth/firebase";
 
+import { auth } from '../auth/firebase'
+import sendPasswordResetEmail from "firebase/auth";
 const ForgotPasswordScreen = ({ navigation }) => {
+
 
     const [email, setEmail] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
 
 
-    const forgotPassword = (Email) => {
-        setModalVisible(false)
-        sendPasswordResetEmail(auth, Email, null)
+    const forgotPassword = () => {
+        console.log("reset email sent to " + email);
+        sendPasswordResetEmail(email)
             .then(() => {
-                setModalVisible(true)
-                // alert("reset email sent to " + Email);
+                alert("reset email sent to " + email);
             })
             .catch(function (e) {
-                setModalVisible(false)
+                console.log(e);
             });
     };
     return (
@@ -36,7 +36,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
                 style={styles.input}
             />
             <TouchableOpacity
-                onPress={() => forgotPassword(email)}
+                // onPress={() => setModalVisible(true)}
+                onPress={forgotPassword}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>Get Reset Link</Text>

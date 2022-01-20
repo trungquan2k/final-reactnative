@@ -4,52 +4,21 @@ import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSh
 import { FontAwesome } from '@expo/vector-icons';
 
 // NQS Rating Component
-const NQSRatingComponent = (props) => {
+const NQSRatingComponent = ({title,subtitle,nqs_rating}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(value => !value);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
-    const data = [
-        {
-            id: 1,
-            name: 'Education program and practice',
-            link: 'Exceeding NQS'
-        },
-        {
-            id: 2,
-            name: 'Children’s health and safety',
-            link: 'Exceeding NQS'
-        },
-        {
-            id: 3,
-            name: 'Physical environment',
-            link: 'Exceeding NQS'
-        },
-        {
-            id: 4,
-            name: 'Staffing arrangement',
-            link: 'Exceeding NQS'
-        },
-        {
-            id: 5,
-            name: 'Relationships with children',
-            link: 'Exceeding NQS'
-        },
-        {
-            id: 6,
-            name: 'Collaborative partnerships with families and communities',
-            link: 'Exceeding NQS'
-        },
-    ]
+    
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item,index }) => (
         <View style={{ flexDirection: 'column' }}>
             <View style={{
                 flexDirection: 'row',
                 marginVertical: 5
             }}>
-                <Text style={{ flex: 1 }}>{item.id + '.'}</Text>
+                <Text style={{ flex: 1 }}>{index}</Text>
                 <Text style={{ width: '60%' }}>{item.name}</Text>
                 <Text style={{ color: '#FB8429' }}>{item.link}</Text>
             </View>
@@ -67,8 +36,8 @@ const NQSRatingComponent = (props) => {
                 </View>
 
                 <View style={styles.content}>
-                    <Text style={styles.title}>{props.title}</Text>
-                    <Text style={styles.subtitle}>{props.subtitle}</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.subtitle}>{subtitle}</Text>
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
                     {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
@@ -84,7 +53,7 @@ const NQSRatingComponent = (props) => {
                         }}>Last Reviewed 01 December 2019</Text>
                     </View>
                     <FlatList
-                        data={data}
+                        data={nqs_rating}
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />
