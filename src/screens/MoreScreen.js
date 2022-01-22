@@ -15,16 +15,21 @@ const More=({ navigation })=> {
           })
           .catch(error => alert(error.message))
       }
+
+    const RowItem=({text})=>(
+        <View style={styles.row}>
+            <Text>{text}</Text>
+            <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
+        </View>
+    )
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>More</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={[styles.body, { height: 185 }]}>
+                <View style={[styles.body, { height: 185, marginTop:1 }]}>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                        <View style={styles.row}>
-                            <Text>My profile</Text>
-                            <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                        </View>
+                        <RowItem text="My profile"/>
                     </TouchableOpacity>
                     <View style={styles.row}>
                         <Text>Language</Text>
@@ -37,9 +42,8 @@ const More=({ navigation })=> {
                     <View style={styles.row}>
                         <Text>Notifications</Text>
                         <Switch
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
-                            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                            ios_backgroundColor="#3e3e3e"
+                            trackColor={{ false: "#F7F8F9", true: "#DB147F" }}
+                            thumbColor="white"
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                             style={{ height: 20 }}
@@ -47,46 +51,16 @@ const More=({ navigation })=> {
                     </View>
                 </View>
                 <View style={[styles.body, { height: 458 }]}>
-                    <View style={styles.row}>
-                        <Text>About us</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>About Kindicare application</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>The Kindicare Rating Explained</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>About the National Quality Standard (NQS)</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>The Value for Money Rating Explained</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>About the Government Childcare Subsidy</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>FAQ</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>Term & Conditions</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>Privacy Policy</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
-                    <View style={styles.row}>
-                        <Text>Feedback & Support</Text>
-                        <Ionicons name="arrow-forward" size={24} color="#2D1F21" />
-                    </View>
+                    <RowItem text="About us"/>
+                    <RowItem text="About Kindicare application"/>
+                    <RowItem text="The Kindicare Rating Explained"/>
+                    <RowItem text="About the National Quality Standard (NQS)"/>
+                    <RowItem text="The Value for Money Rating Explained"/>
+                    <RowItem text="About the Government Childcare Subsidy"/>
+                    <RowItem text="FAQ"/>
+                    <RowItem text="Term & Conditions"/>
+                    <RowItem text="Privacy Policy"/>
+                    <RowItem text="Feedback & Support"/>
                 </View>
                 <View style={[styles.body, { paddingVertical: 11 }]}>
                     <TouchableOpacity style={styles.row} onPress={()=>{handleSignOut()}}>
@@ -102,22 +76,23 @@ export default More;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor:'#E5E5E5'
     },
     header: {
         fontSize: 16,
         lineHeight: 20,
         fontWeight: '700',
         textAlign: 'center',
-        paddingTop: 24,
+        paddingTop: 56,
         paddingBottom: 10,
-        borderBottomColor: '#D0C9D6',
-        borderBottomWidth: 1,
+        backgroundColor:'white'
     },
     body: {
         marginTop: 10,
         paddingVertical: 16,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor:'white'
     },
     row: {
         flexDirection: 'row',
