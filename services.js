@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { useWindowDimensions } from 'react-native';
 import {db} from './src/auth/firebase';
 
 export const loadAllCenter = async ()=>{
@@ -34,3 +35,7 @@ export const getGeneralInfo=(centers=[],centerId="")=>{
     return {id,name, address,contact,date,description,kindService,children,waitlisted,services};
 }
 
+export const getUser= async(uid)=>{
+    const doc = await db.collection("users").doc(uid).get();
+    return doc.data();
+}
