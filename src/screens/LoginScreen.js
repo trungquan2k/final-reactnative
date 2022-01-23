@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { StyleSheet, TextInput, Text, TouchableOpacity, View, Image } from 'react-native'
-import { auth } from '../auth/firebase'
+import { auth, db } from '../auth/firebase'
+
 import { Ionicons } from '@expo/vector-icons'
 import AsyncStorageLib from '@react-native-async-storage/async-storage'
 

@@ -3,52 +3,29 @@ import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import CenterContext from '../context/CenterContext';
 import { IconSummary } from '../components/IconSummary';
+import { EnquiryComponent } from '../components/EnquiryComponent';
 
 const Summary=({centerId})=> {
     const [active, setActive] = useState(false);
     const centers=  useContext(CenterContext)
     const {name, address,contact,date,description,kindService,outdoor}= centers.find(v=>v.id===centerId);
-
     const MainContent = () => (
         <>
           <Text style={styles.contentTitle}>General Information</Text>
-           <IconSummary style={styles.contentText} value={`${address.LGA} ${address.Region}`} />
-           <IconSummary style={styles.contentText} value={name} />
-           <IconSummary style={styles.contentText} value={outdoor} />
-           <IconSummary style={styles.contentText} value={date} />
-           <Text style={styles.contentTitle}>Contact Info</Text>
-           <IconSummary style={styles.contentText} value={contact.phone} />
-           <IconSummary style={styles.contentText} value={contact.email} />
-           <IconSummary  style={[styles.contentText, { color: '#DB147F' }]} value={contact.website} />
+           <IconSummary style={styles.contentText} icon="https://i.ibb.co/Db1gbHg/ic-map-pin.png"  value={`${address.LGA} ${address.Region}`} />
+           <IconSummary style={styles.contentText} icon="https://i.ibb.co/F8FQchb/ic-centre.png" value={name} />
+           <IconSummary style={styles.contentText} icon="https://i.ibb.co/2MqJzCX/ic-outdoor.png"value={outdoor} />
+           <IconSummary style={styles.contentText} icon="https://i.ibb.co/4TWkM5D/ic-calendar-blank.png" value={date} />
+           <Text style={styles.contentTitle} >Contact Info</Text>
+           <IconSummary style={styles.contentText}   icon="https://i.ibb.co/L03kjZy/ic-phone.png" value={contact.phone} />
+           <IconSummary style={styles.contentText} icon="https://i.ibb.co/6rqY8WV/Envelope-Simple.png"  value={contact.email} />
+           <IconSummary  style={[styles.contentText, { color: '#DB147F' }]}  icon="https://i.ibb.co/MRqSZZ4/ic-arrow-1.png" value={contact.website} />
             <Text style={styles.contentTitle}>Enquiries Summary</Text>
-            <View style={[styles.contentRow, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                    <Text style={styles.contentText}>Total Enquiries</Text>
-                </View>
-                <Text style={styles.contentText}>192</Text>
-            </View>
-            <View style={[styles.contentRow, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                    <Text style={styles.contentText}>More Information</Text>
-                </View>
-                <Text style={styles.contentText}>192</Text>
-            </View>
-            <View style={[styles.contentRow, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                    <Text style={styles.contentText}>Check for Vacancies</Text>
-                </View>
-                <Text style={styles.contentText}>192</Text>
-            </View>
-            <View style={[styles.contentRow, { justifyContent: 'space-between' }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <AntDesign name="upcircle" size={24} color="#32A4FC" />
-                    <Text style={styles.contentText}>Book a Tour or Visit</Text>
-                </View>
-                <Text style={styles.contentText}>192</Text>
-            </View>
+            <EnquiryComponent  icon="https://i.ibb.co/9shVq8j/Enquiries.png" value="Total Enquiries" />
+            <EnquiryComponent   icon="https://i.ibb.co/h8q6vSZ/Enquiries-6.png" value="More Information" />   
+            <EnquiryComponent    icon="https://i.ibb.co/bgLr92Z/Enquiries-2.png" value="Check for Vacancies" />      
+            <EnquiryComponent  icon="https://i.ibb.co/BLRVCWC/Enquiries-3.png" value="Book a Tour or Visit" />
+
         </>
     )
 
@@ -114,5 +91,7 @@ const styles = StyleSheet.create({
     contentText: {
         fontSize: 16,
         marginHorizontal: 16,
-    }
+    },
+   
+
 })

@@ -1,10 +1,10 @@
-import { View,Text,StyleSheet} from "react-native"
+import { View,Text,StyleSheet,Image} from "react-native"
 import { AntDesign } from '@expo/vector-icons';
 
-export  const IconSummary = ({value,style}) => {
+export  const IconSummary = ({icon,value,style}) => {
     return (
         <View style={styles.contentRow}>
-                <AntDesign name="upcircle" size={24} color="#32A4FC" />
+                <Image  style={styles.tinyLogo} source={{uri:icon}} />
                 <Text style={style}> {value}</Text>
         </View>
     )
@@ -16,4 +16,8 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         alignItems: 'center',
     },
+    tinyLogo: {
+        width: 20,
+        height: 20,
+      },
 })
