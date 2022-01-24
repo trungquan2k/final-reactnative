@@ -2,12 +2,17 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+<<<<<<< HEAD
+=======
+import ImageView from "react-native-image-viewing";
+>>>>>>> 1fd5b30 (upload component user review)
 
 
 
 const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
+    const [visible, setIsVisible] = useState(false);
 
     const toggleOpen = () => {
         setIsOpen(value => !value);
@@ -62,10 +67,18 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                 <View style={styles.imageReview}>
                     {
                         images.map((value, index, arr) => {
-
                             if (index >= 0 && index < 3) {
                                 return (
-                                    <View>
+                                    <TouchableOpacity onPress={() => {
+                                        <ImageView
+                                            images={
+                                                value
+                                            }
+                                            imageIndex={index}
+                                            visible={visible}
+                                            onRequestClose={() => setIsVisible(false)}
+                                        />
+                                    }}>
                                         <Image
                                             source={{ uri: value }}
                                             key={index}
@@ -76,14 +89,13 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                                                 marginVertical: 5,
                                             }}
                                         />
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             }
                             else if (index === full) {
                                 return (
                                     <TouchableOpacity onPress={() => {
                                         setStatus(!status);
-
                                     }}>
                                         <Image
                                             source={{ uri: value }}
