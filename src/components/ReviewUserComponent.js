@@ -2,10 +2,7 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-<<<<<<< HEAD
-=======
 import ImageView from "react-native-image-viewing";
->>>>>>> 1fd5b30 (upload component user review)
 
 
 
