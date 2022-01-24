@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 
 const CardContentDashBoard = (props) => {
     return (
-        <View style={styles.viewContent}>
+        <View style={styles.viewCard}>
             <View style={styles.card} >
                 <View style={styles.leftCart} >
                     <View style={{
@@ -37,43 +37,37 @@ const CardContentDashBoard = (props) => {
                 </View>
             </View>
         </View>
-
     )
 }
 
 export default CardContentDashBoard
 
 const styles = StyleSheet.create({
-    viewContent: {
-        padding: 20,
-
+    viewCard: {
+        height: 200,
+        margin:20,
     },
     card: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 4,
-        },
+        },  
         shadowOpacity: 0,
         shadowRadius: 4.65,
         elevation: 1,
-        height: 214,
-        flexGrow: 0,
         flexDirection: "row",
-        width: "100%",
         backgroundColor: "white",
         flexWrap: "wrap",
         borderColor: "black",
         borderBottomColor: '#DB147F',
         borderRadius: 16,
         //position
-        position: 'relative',
-        bottom: 60,
-        // top:-60,
+        position: 'absolute',
+        // top:-40,
+        bottom: 25,  
         padding: 16,
         alignItems: 'center',
-        zIndex: 2
-
     },
     leftCart: {
         flex: 1,
