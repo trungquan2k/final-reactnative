@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react'
 import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet } from 'react-native';
-import { FontAwesome ,Ionicons} from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import ImageView from "react-native-image-viewing";
 
 
 
-const ReviewUserComponent = ({title,subtitle,reviews}) => {
+const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
+    const [visible, setIsVisible] = useState(false);
 
     const toggleOpen = () => {
         setIsOpen(value => !value);
@@ -15,7 +17,7 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
     }
     const RenderItem = ({ item }) => {
         const full = 3;
-        const{ id,user_avatar,user_name,images,description,type,rating,created_at}= item;
+        const { id, user_avatar, user_name, images, description, type, rating, created_at } = item;
         return (
             <View style={styles.userReview}>
                 <View style={{ flexDirection: 'row', }}>
@@ -62,10 +64,18 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
                 <View style={styles.imageReview}>
                     {
                         images.map((value, index, arr) => {
-
                             if (index >= 0 && index < 3) {
                                 return (
-                                    <View>
+                                    <TouchableOpacity onPress={() => {
+                                        <ImageView
+                                            images={
+                                                value
+                                            }
+                                            imageIndex={index}
+                                            visible={visible}
+                                            onRequestClose={() => setIsVisible(false)}
+                                        />
+                                    }}>
                                         <Image
                                             source={{ uri: value }}
                                             key={index}
@@ -76,14 +86,13 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
                                                 marginVertical: 5,
                                             }}
                                         />
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             }
                             else if (index === full) {
                                 return (
                                     <TouchableOpacity onPress={() => {
                                         setStatus(!status);
-
                                     }}>
                                         <Image
                                             source={{ uri: value }}
@@ -98,7 +107,7 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
                                     </TouchableOpacity>
                                 )
                             }
-                            {/* if (!status) {
+                            if (!status) {
                                 return (
                                     <Image
                                         source={{ uri: value }}
@@ -110,7 +119,7 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
                                         }}
                                     />
                                 )
-                            } */}
+                            }
                         })
                     }
                     <Text style={{ position: 'absolute', right: 30, bottom: 30, color: 'white', fontSize: 16, fontWeight: 'bold' }}>
@@ -149,7 +158,7 @@ const ReviewUserComponent = ({title,subtitle,reviews}) => {
                 <FlatList
                     data={reviews}
                     renderItem={RenderItem}
-                    keyExtractor={(item,index) => `review${index}`}
+                    keyExtractor={(item, index) => `review${index}`}
                 />
             </View>
         </View>
