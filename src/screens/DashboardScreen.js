@@ -104,11 +104,6 @@ const Dashboard = () => {
                     })
                 }
             </View>
-            {/* <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            /> */}
         </ScrollView>
     );
 }
@@ -163,8 +158,8 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         //position
         position: 'absolute',
-        // top:-40,
-        bottom: 25,
+        top:-50,
+        //bottom: 25,
         padding: 16,
         alignItems: 'center',
     },
