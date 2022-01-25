@@ -2,7 +2,6 @@ import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import CardContentDashBoard from "../components/CardContentDashBoard";
-import { Pressable } from "react-native";
 
 
 const Dashboard = () => {
@@ -50,17 +49,18 @@ const Dashboard = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <StatusBar style='light' />
-            <View style={styles.header}>
-            <Image source={require('../../assets/Vector.png')} width={100} style={styles.icon} />
-                <Pressable style={styles.headerSelect} onPress={() => {}}>
-                    <Entypo name="shop" size={20} color='white' />
-                    <Text style={styles.headerTitle}>Goodstart Early Learning ABC</Text>
-                    <AntDesign name="down" size={20} color="white" />
-                </Pressable>
-                <TouchableOpacity>
-                    <AntDesign name="pluscircleo" size={20} color="white" />
-                </TouchableOpacity>
+            <View style={styles.roundCorner} >
+                <Image source={require('../../assets/Vector.png')} width={100} style={styles.logo} />
+                <View style={{
+                    flex: 1
+                }}>
+                    <Image source={require('../../assets/icons/ic-centre.png')} width='100%' />
+                </View>
+                <Text style={styles.title}>Goodstart Early Learning ABC</Text>
+                <View style={styles.layout}>
+                    <FontAwesome name={'chevron-down'} size={14} color="white" />
+                </View>
+                <Ionicons name="notifications-outline" size={20} color="white" />
             </View>
             <View>
                 {
@@ -114,7 +114,24 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    header: {
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    title: {
+        fontSize: 14,
+        lineHeight: 24,
+        color: 'white',
+        marginRight: 10
+    },
+    layout: {
+        flex: 1,
+        marginLeft: 5
+    },
+    roundCorner: {
+        backgroundColor: '#DB147F',
+        width: "100%",
         height: 136,
         borderBottomColor: '#DB147F',
         borderBottomRightRadius: 16,
@@ -124,15 +141,7 @@ const styles = StyleSheet.create({
         elevation: 0,
         padding: 20,
     },
-    headerSelect: {
-        flexDirection: 'row',
-    },
-    headerTitle: {
-        color: 'white',
-        fontSize: 14,
-        paddingHorizontal: 10
-    },
-    icon: {
+    logo: {
         position: 'absolute',
         left: 0
     },
@@ -159,7 +168,6 @@ const styles = StyleSheet.create({
         //position
         position: 'absolute',
         top:-50,
-        //bottom: 25,
         padding: 16,
         alignItems: 'center',
     },

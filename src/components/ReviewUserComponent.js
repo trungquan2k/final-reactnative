@@ -10,10 +10,6 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
 
-    // Image view
-    const [visible, setIsVisible] = useState(false);
-    const [imageArr, setImageArr] = useState([]);
-    const [imageIndex, setImageIndex] = useState(0);
 
     // Image view
     const [visible, setIsVisible] = useState(false);
