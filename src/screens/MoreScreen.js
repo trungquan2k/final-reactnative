@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Switch, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth } from "../auth/firebase";
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
-const More=({ navigation })=> {
+const More = ({ navigation }) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    
+
     const handleSignOut = () => {
         auth
-          .signOut()
-          .then(() => {
-            navigation.navigate("Auth")
-          })
-          .catch(error => alert(error.message))
-      }
+            .signOut()
+            .then(() => {
+                navigation.navigate("Auth")
+            })
+            .catch(error => alert(error.message))
+
+    }
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>More</Text>
@@ -89,7 +91,7 @@ const More=({ navigation })=> {
                     </View>
                 </View>
                 <View style={[styles.body, { paddingVertical: 11 }]}>
-                    <TouchableOpacity style={styles.row} onPress={()=>{handleSignOut()}}>
+                    <TouchableOpacity style={styles.row} onPress={() => { handleSignOut() }}>
                         <Text >Log out</Text>
                         <MaterialCommunityIcons name="logout" size={24} color="#200E32" />
                     </TouchableOpacity>

@@ -1,17 +1,17 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import CenterContext from '../context/CenterContext';
 
 
-const HoursComponents=({centerId})=> {
-    const [activeButton, setActiveButton] = useState('')
-    const centers=  useContext(CenterContext);
-    const {hours}= centers.find(v=>v.id===centerId);
+const HoursComponents = ({ centerId }) => {
+    const [activeButton, setActiveButton] = useState('Monday')
+    const centers = useContext(CenterContext);
+    const { hours } = centers.find(v => v.id === centerId);
 
-    const Hour = ({title, item }) => {
+    const Hour = ({ title, item }) => {
 
-        const  {Mon_Fri,Sat,Sun}= item;
-        
+        const { Mon_Fri, Sat, Sun } = item;
+
         return (
             <View style={styles.container}>
                 <View style={styles.content}>
@@ -19,13 +19,13 @@ const HoursComponents=({centerId})=> {
                         <Text style={styles.title}>{title}</Text>
                     </View>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <TouchableOpacity onPress={()=>{}} style={styles.btnSelected}>
                             <Text style={styles.textLight}>Mon-Fri</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <TouchableOpacity onPress={() => { }} style={styles.btnSelected}>
                             <Text style={styles.textLight}>Sat</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }} style={styles.button}>
+                        <TouchableOpacity onPress={() => { }} style={styles.btnSelected}>
                             <Text style={styles.textLight}>Sun</Text>
                         </TouchableOpacity>
                     </View>
@@ -44,7 +44,7 @@ const HoursComponents=({centerId})=> {
                                 <Text style={styles.hours}>{Mon_Fri.afternoon.end}</Text>
                             </View>
                         </View>
-    
+
                     </View>
                 </View>
             </View>
@@ -52,10 +52,10 @@ const HoursComponents=({centerId})=> {
     }
 
     return (
-        <> 
-        <Hour title="Normal" item={hours.normal} />
-        <Hour title="School Holidays" item={hours.holidays} />
-        <Hour title="School Term" item={hours.term} />
+        <>
+            <Hour title="Normal" item={hours.normal} />
+            <Hour title="School Holidays" item={hours.holidays} />
+            <Hour title="School Term" item={hours.term} />
         </>
     )
 }
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     textLight: {
-        color: 'black'
+        color: 'white'
     },
     textDark: {
         color: 'black'
