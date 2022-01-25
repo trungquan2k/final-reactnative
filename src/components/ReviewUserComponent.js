@@ -15,6 +15,11 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [imageArr, setImageArr] = useState([]);
     const [imageIndex, setImageIndex] = useState(0);
 
+    // Image view
+    const [visible, setIsVisible] = useState(false);
+    const [imageArr, setImageArr] = useState([]);
+    const [imageIndex, setImageIndex] = useState(0);
+
     const toggleOpen = () => {
         setIsOpen(value => !value);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -170,9 +175,6 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                 />
             </View>
             <View>
-                {
-                    visible ? console.log(imageArr) : <Text></Text>
-                }
                 <ImageView
                     images={imageArr}
                     imageIndex={imageIndex}
