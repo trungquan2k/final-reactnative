@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet, ScrollView } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import ImageView from "react-native-image-viewing";
 
@@ -9,7 +9,11 @@ import ImageView from "react-native-image-viewing";
 const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
+
+    // Image view
     const [visible, setIsVisible] = useState(false);
+    const [imageArr, setImageArr] = useState([]);
+    const [imageIndex, setImageIndex] = useState(0);
 
     // Image view
     const [visible, setIsVisible] = useState(false);
@@ -128,6 +132,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                                     />
                                 )
                             }
+
                         })
                     }
                     <Text style={{ position: 'absolute', right: 30, bottom: 30, color: 'white', fontSize: 16, fontWeight: 'bold' }}>
