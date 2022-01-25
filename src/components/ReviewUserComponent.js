@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react'
-import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet, ScrollView } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import ImageView from "react-native-image-viewing";
 
 
 
@@ -9,16 +10,24 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(false);
 
+    // Image view
+    const [visible, setIsVisible] = useState(false);
+    const [imageArr, setImageArr] = useState([]);
+    const [imageIndex, setImageIndex] = useState(0);
+
     const toggleOpen = () => {
         setIsOpen(value => !value);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
+
     const RenderItem = ({ item }) => {
         const full = 3;
         const { id, user_avatar, user_name, images, description, type, rating, created_at } = item;
         return (
             <View style={styles.userReview}>
-                <View style={{ flexDirection: 'row', }}>
+                <View style={{
+                    flexDirection: 'row',
+                }}>
                     <View>
                         <Image source={{ uri: user_avatar }} style={styles.user_avatar} />
                     </View>
@@ -62,10 +71,17 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                 <View style={styles.imageReview}>
                     {
                         images.map((value, index, arr) => {
-
                             if (index >= 0 && index < 3) {
                                 return (
-                                    <View>
+                                    <TouchableOpacity onPress={() => {
+                                        setIsVisible(true);
+                                        if (imageArr.length == 0) {
+                                            images.map(v => {
+                                                imageArr.push({ uri: v });
+                                            })
+                                        }
+                                        setImageIndex(index);
+                                    }}>
                                         <Image
                                             source={{ uri: value }}
                                             key={index}
@@ -74,16 +90,16 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                                                 height: 70,
                                                 borderRadius: 8,
                                                 marginVertical: 5,
+                                                marginHorizontal: 3
                                             }}
                                         />
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             }
                             else if (index === full) {
                                 return (
                                     <TouchableOpacity onPress={() => {
                                         setStatus(!status);
-
                                     }}>
                                         <Image
                                             source={{ uri: value }}
@@ -111,6 +127,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                                     />
                                 )
                             }
+
                         })
                     }
                     <Text style={{ position: 'absolute', right: 30, bottom: 30, color: 'white', fontSize: 16, fontWeight: 'bold' }}>
@@ -151,6 +168,22 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                     renderItem={RenderItem}
                     keyExtractor={(item, index) => `review${index}`}
                 />
+            </View>
+            <View>
+                {
+                    visible ? console.log(imageArr) : <Text></Text>
+                }
+                <ImageView
+                    images={imageArr}
+                    imageIndex={imageIndex}
+                    visible={visible}
+                    onRequestClose={() => {
+                        setIsVisible(false)
+                        setImageArr([])
+                    }}
+                    animationType="fade"
+                />
+
             </View>
         </View>
     );
@@ -258,7 +291,7 @@ const styles = StyleSheet.create({
     imageReview: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
     },
     opacity: {
         opacity: 0.54,
