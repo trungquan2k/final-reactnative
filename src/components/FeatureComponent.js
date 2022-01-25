@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet,FlatList } from 'react-native'
+import { View, Text, StyleSheet,FlatList, Image } from 'react-native'
 import SwitchToggle from "react-native-switch-toggle";
 import { FontAwesome } from '@expo/vector-icons';
 import CenterContext from '../context/CenterContext';
@@ -19,6 +19,7 @@ const FeatureComponent = ({centerId}) => {
     },[]);
     const RenderItem=({item})=>{
         const {icon,title,id} = item;
+        console.log(icon);
         const check = active.find(v=>v===id);
         const toggleSwitch = () =>{
             if(check){
@@ -34,11 +35,7 @@ const FeatureComponent = ({centerId}) => {
                 <View 
                 style={styles.star}
                 >
-                <FontAwesome
-                        name="list"
-                        size={20}
-                        color="black"
-                        />
+                <Image source={{uri:icon}} style={styles.icon} />
                     <Text style={styles.text}>{title}</Text>
                 </View>     
                 <View style={styles.switchButton}>
@@ -71,12 +68,12 @@ const FeatureComponent = ({centerId}) => {
 
     return (
         <View>
-            <FlatList
+            {allFeatures&&<FlatList
                 data={allFeatures}
                 renderItem={RenderItem}
                 keyExtractor={(item,index) => `feature${index}`}
                 style={styles.flatList}
-            />
+            />}
         </View>
     )
 }
@@ -103,6 +100,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 8,
         
+    },
+    icon:{
+        width:30,
+        height:30
     },
     star:{
         flexDirection:'row'
