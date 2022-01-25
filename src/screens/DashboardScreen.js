@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable, StatusBar } from "react-native";
 import { Entypo,AntDesign } from "@expo/vector-icons";
-import Data from "../mockData/Data";
+import Data from "../mockData/Data.js";
 
 const Dashboard = () => {
     return (
