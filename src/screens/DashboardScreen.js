@@ -3,7 +3,6 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList }
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Data from "../mockData/Data";
 
-
 const Dashboard = () => {
     return (
         <ScrollView style={styles.container}>
