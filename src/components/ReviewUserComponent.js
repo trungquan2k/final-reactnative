@@ -8,9 +8,7 @@ import ImageView from "react-native-image-viewing";
 
 const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [status, setStatus] = useState(false);
-
-    // Image view
+    const [status, setStatus] = useState(true);
     const [visible, setIsVisible] = useState(false);
     const [imageArr, setImageArr] = useState([]);
     const [imageIndex, setImageIndex] = useState(0);
@@ -36,7 +34,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                             <Text style={styles.text}>{user_name}</Text>
                             <Ionicons
                                 name="star-outline"
-                                size={15}
+                                size={16}
                                 color="black"
                                 style={
                                     styles.star
@@ -100,6 +98,17 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                                 return (
                                     <TouchableOpacity onPress={() => {
                                         setStatus(!status);
+                                        if (!status) {
+                                            setIsVisible(true);
+                                            if (imageArr.length == 0) {
+                                                images.map(v => {
+                                                    imageArr.push({ uri: v });
+                                                })
+                                            }
+                                            setImageIndex(index);
+                                        }else{
+                                            setIsVisible(!status)
+                                        }
                                     }}>
                                         <Image
                                             source={{ uri: value }}
@@ -116,15 +125,25 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                             }
                             if (!status) {
                                 return (
-                                    <Image
-                                        source={{ uri: value }}
-                                        style={{
-                                            width: 70,
-                                            height: 70,
-                                            borderRadius: 8,
-                                            marginVertical: 5,
-                                        }}
-                                    />
+                                    <TouchableOpacity onPress={() => {
+                                        setIsVisible(true);
+                                        if (imageArr.length == 0) {
+                                            images.map(v => {
+                                                imageArr.push({ uri: v });
+                                            })
+                                        }
+                                        setImageIndex(index);
+                                    }}>
+                                        <Image
+                                            source={{ uri: value }}
+                                            style={{
+                                                width: 70,
+                                                height: 70,
+                                                borderRadius: 8,
+                                                marginVertical: 5,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
                                 )
                             }
 
@@ -134,13 +153,6 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                         {status ? "+" : ''} {status ? images.length - full : null}
                     </Text>
                 </View>
-                <View
-                    style={{
-                        borderBottomColor: '#F2F2F2',
-                        borderBottomWidth: 1,
-                        marginVertical: 10
-                    }}
-                />
             </View>
         );
     }
@@ -149,13 +161,16 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
         <View style={styles.rating}>
             <View style={styles.body}>
                 <View style={styles.headerTitle}>
-                    <Image
-                        source={{ uri: "https://i.ibb.co/BL505TS/ic-star-fill.png" }}
-                        style={styles.icon}
-                    />
+                    {
+                        !isOpen ?
+                            <Image
+                                source={{ uri: "https://i.ibb.co/BL505TS/ic-star-fill.png" }}
+                                style={styles.icon}
+                            /> : null
+                    }
                 </View>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{title}</Text>
+                    <Text style={!isOpen ? styles.title : styles.titles}>{title}</Text>
                     {!isOpen ? <Text style={styles.subtitle}>{subtitle}</Text> : <Text></Text>}
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
@@ -169,19 +184,16 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                     keyExtractor={(item, index) => `review${index}`}
                 />
             </View>
-            <View>
-                <ImageView
-                    images={imageArr}
-                    imageIndex={imageIndex}
-                    visible={visible}
-                    onRequestClose={() => {
-                        setIsVisible(false)
-                        setImageArr([])
-                    }}
-                    animationType="fade"
-                />
-
-            </View>
+            <ImageView
+                images={imageArr}
+                imageIndex={imageIndex}
+                visible={visible}
+                onRequestClose={() => {
+                    setIsVisible(false)
+                    setImageArr([])
+                }}
+                animationType="fade"
+            />
         </View>
     );
 }
@@ -192,7 +204,6 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
-
     },
     body: {
         flexDirection: 'row',
@@ -217,6 +228,15 @@ const styles = StyleSheet.create({
     title: {
         color: 'black',
         fontWeight: 'bold',
+        fontSize: 14,
+        justifyContent: 'center'
+    },
+    titles: {
+        color: 'black',
+        fontWeight: 'bold',
+        position: 'relative',
+        top: 8,
+        right: 50,
         fontSize: 16,
         justifyContent: 'center'
     },
@@ -232,6 +252,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
+        height: 300,
     },
     button: {
         padding: 5,
@@ -258,6 +279,7 @@ const styles = StyleSheet.create({
         elevation: 1,
         backgroundColor: "white",
         padding: 20,
+        height: 'auto'
     },
     user_avatar: {
         height: 40,
@@ -288,7 +310,6 @@ const styles = StyleSheet.create({
     imageReview: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        // justifyContent: 'space-between',
     },
     opacity: {
         opacity: 0.54,

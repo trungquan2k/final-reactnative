@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import NQSRatingComponent from './NQSRatingComponent';
 import RatingComponent from './RatingComponent';
 import ReviewUserComponent from './ReviewUserComponent';

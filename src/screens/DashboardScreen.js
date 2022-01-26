@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-native";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable, StatusBar } from "react-native";
+import { Entypo,AntDesign } from "@expo/vector-icons";
 import Data from "../mockData/Data";
 
 const Dashboard = () => {
@@ -14,8 +14,8 @@ const Dashboard = () => {
                     <Text style={styles.headerTitle}>Goodstart Early Learning ABC</Text>
                     <AntDesign name="down" size={20} color="white" />
                 </Pressable>
-                <TouchableOpacity>
-                    <AntDesign name="pluscircleo" size={20} color="white" />
+                <TouchableOpacity >
+                    <AntDesign name="pluscircleo" size={20} color="white"  />
                 </TouchableOpacity>
             </View>
             <View>
@@ -72,11 +72,12 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 136,
-        borderBottomColor: '#DB147F',
+        backgroundColor: '#DB147F',
         borderBottomRightRadius: 16,
         borderBottomLeftRadius: 16,
         alignItems: 'center',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         elevation: 0,
         padding: 20,
     },
