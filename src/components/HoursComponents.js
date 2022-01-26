@@ -16,20 +16,8 @@ const HoursComponents = ({ centerId }) => {
     const [activeThree, setActiveThree] = useState(hours.holidays.Mon_Fri);
     const Hour = ({ title, item }) => {
 
-<<<<<<< HEAD
         const { Mon_Fri, Sat, Sun } = item;
 
-=======
-const HoursComponents = ({ centerId }) => {
-    const [activeButton, setActiveButton] = useState('Monday')
-    const centers = useContext(CenterContext);
-    const { hours } = centers.find(v => v.id === centerId);
-
-    const Hour = ({ title, item }) => {
-
-        const { Mon_Fri, Sat, Sun } = item;
-
->>>>>>> 947360d (done Ui Dashboard)
         return (
             <View style={styles.container}>
                 <View style={styles.content}>
@@ -71,7 +59,6 @@ const HoursComponents = ({ centerId }) => {
 
   const Button = ({value, active, setActive }) => {
     return (
-<<<<<<< HEAD
       <TouchableOpacity
         onPress={() => setActive(value)}
         style={[
@@ -181,84 +168,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#E9F4FF",
   },
 });
-=======
-        <>
-            <Hour title="Normal" item={hours.normal} />
-            <Hour title="School Holidays" item={hours.holidays} />
-            <Hour title="School Term" item={hours.term} />
-        </>
-    )
-}
-
-export default HoursComponents;
-const styles = StyleSheet.create({
-    container: {
-        padding: 10,
-    },
-    content: {
-        padding: 20,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0,
-        elevation: 1,
-        backgroundColor: "white",
-        borderRadius: 10
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16
-    },
-    title: {
-        fontWeight: 'bold', fontSize: 16, color: "#2D1F21", paddingVertical: 10
-    },
-    btnSelected: {
-        width: 86,
-        height: 32,
-        backgroundColor: "#DB147F",
-        borderRadius: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: "#DB147F",
-        borderWidth: 1,
-    },
-    btnNotSelected: {
-        width: 86,
-        height: 32,
-        backgroundColor: "white",
-        borderRadius: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: "#DB147F",
-        borderWidth: 1,
-    },
-    textLight: {
-        color: 'white'
-    },
-    textDark: {
-        color: 'black'
-    },
-    body: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 25,
-        paddingVertical: 10
-
-    },
-    hours: {
-        backgroundColor: '#E9F4FF',
-        marginTop: 10,
-        height: 36,
-        width: 58,
-        marginRight: 10,
-        borderRadius: 8,
-        textAlign: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 10,
-
-    }
-})
->>>>>>> 947360d (done Ui Dashboard)

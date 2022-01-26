@@ -9,13 +9,6 @@ import ImageView from "react-native-image-viewing";
 const ReviewUserComponent = ({ title, subtitle, reviews }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState(true);
-
-    // Image view
-    const [visible, setIsVisible] = useState(false);
-    const [imageArr, setImageArr] = useState([]);
-    const [imageIndex, setImageIndex] = useState();
-
-    // Image view
     const [visible, setIsVisible] = useState(false);
     const [imageArr, setImageArr] = useState([]);
     const [imageIndex, setImageIndex] = useState(0);
