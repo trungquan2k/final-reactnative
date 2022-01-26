@@ -66,12 +66,13 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                         {description}
                     </Text>
                 </View>
+                
                 <View style={styles.imageReview}>
                     {
                         images.map((value, index, arr) => {
                             if (index >= 0 && index < 3) {
                                 return (
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity key={index} onPress={() => {
                                         setIsVisible(true);
                                         if (imageArr.length == 0) {
                                             images.map(v => {
@@ -96,7 +97,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                             }
                             else if (index === full) {
                                 return (
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity  key={index} onPress={() => {
                                         setStatus(!status);
                                         if (!status) {
                                             setIsVisible(true);
@@ -125,7 +126,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                             }
                             if (!status) {
                                 return (
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity  key={index} onPress={() => {
                                         setIsVisible(true);
                                         if (imageArr.length == 0) {
                                             images.map(v => {
@@ -153,6 +154,7 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                         {status ? "+" : ''} {status ? images.length - full : null}
                     </Text>
                 </View>
+           
             </View>
         );
     }

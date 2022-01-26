@@ -56,7 +56,7 @@ const NQSRatingComponent = ({ title, subtitle, nqs_rating }) => {
                     <FlatList
                         data={nqs_rating}
                         renderItem={renderItem}
-                        keyExtractor={(item,index) => index.id}
+                        keyExtractor={(item,index) => index}
                     />
                 </View>
             </View>
