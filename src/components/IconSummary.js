@@ -5,7 +5,7 @@ export  const IconSummary = ({icon,value,style}) => {
     return (
         <View style={styles.contentRow}>
                 <Image  style={styles.tinyLogo} source={{uri:icon}} />
-                <Text style={style}> {value}</Text>
+                <Text style={style} > {value}</Text>
         </View>
     )
 }
