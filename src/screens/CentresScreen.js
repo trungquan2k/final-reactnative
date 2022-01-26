@@ -26,7 +26,7 @@ const Centres = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [checked, setChecked] = useState("all");
   const [isModal, setModal] = useState(false);
-  const centers = useContext(CenterContext);
+  const  {centers:[centers,setCenters]}= useContext(CenterContext)
   const refRBSheet = useRef();
   const Header = () => {
     return (

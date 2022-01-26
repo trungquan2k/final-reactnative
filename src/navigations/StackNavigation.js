@@ -7,17 +7,23 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import CentreDetails from '../screens/CentreDetailsScreen';
 import Profile from '../screens/ProfileScreen';
 import CenterContext from '../context/CenterContext';
-import { loadAllCenter } from '../../services';
+import { getFeatures, loadAllCenter } from '../../services';
 
 export default function StackNavigation() {
     const [centers, setCenters] = useState([]);
+    const [features, setFeatures] = useState([]);
+
     useEffect(async () => {
         const getCenters = await loadAllCenter();
         setCenters([...getCenters]);
-    }, []);  
+    }, []);
+    useEffect(async () => {
+        const features= await getFeatures();
+        setFeatures([...features])
+    }, [setFeatures]);    
     const Stack = createStackNavigator();
     return (
-        <CenterContext.Provider value={centers} >
+        <CenterContext.Provider value={{centers:[centers,setCenters],features:[features,setFeatures]}} >
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="TabNavigation">
                     <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} options={{ headerShown: false }} />

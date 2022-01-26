@@ -23,6 +23,9 @@ export const getMarketings= async()=>{
 export const getAllCenterNames=(centers)=>{
     return centers.map(data=>data.name);
 }
+export const getCenterById=(centers,centerId)=>{
+    return centers.find(v=>v.id===centerId);
+}
 
 export const getGeneralInfo=(centers=[],centerId="")=>{
 
@@ -38,4 +41,7 @@ export const getGeneralInfo=(centers=[],centerId="")=>{
 export const getUser= async(uid)=>{
     const doc = await db.collection("users").doc(uid).get();
     return doc.data();
+}
+export const updateFeature=(centerId,data=[])=>{
+    db.collection("centers").doc(centerId).update({"features":data});
 }

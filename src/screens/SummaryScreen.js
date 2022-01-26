@@ -6,9 +6,11 @@ import { IconSummary } from '../components/IconSummary';
 import { EnquiryComponent } from '../components/EnquiryComponent';
 
 const Summary=({centerId})=> {
-    const [active, setActive] = useState(true);
-    const centers=  useContext(CenterContext)
+    const [active, setActive] = useState(false);
+    const {centers:[centers,setCenters]}=  useContext(CenterContext)
     const {name, address,contact,date,description,kindService,outdoor}= centers.find(v=>v.id===centerId);
+    if(!address) return <Text> Error </Text>
+
     const MainContent = () => (
             <View>
                 <View  style={styles.hr}/> 

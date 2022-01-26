@@ -9,7 +9,7 @@ import CenterContext from '../context/CenterContext';
 
 const RatingAndServiceComponent = ({centerId}) => {
     const [reviews,setReviews] =useState({})
-    const centers = useContext(CenterContext);
+    const {centers:[centers,setCenters]} = useContext(CenterContext);
     useEffect(async ()=>{
         setReviews(getDetail(centers,centerId,"reviews")); 
     },[]);
