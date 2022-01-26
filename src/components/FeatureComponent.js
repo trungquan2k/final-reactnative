@@ -3,73 +3,60 @@ import { View, Text, StyleSheet,FlatList, Image } from 'react-native'
 import SwitchToggle from "react-native-switch-toggle";
 import { FontAwesome } from '@expo/vector-icons';
 import CenterContext from '../context/CenterContext';
-import { getFeatures,getDetail } from '../../services';
+import {getDetail, loadAllCenter, updateFeature } from '../../services';
 
 
 const FeatureComponent = ({centerId}) => {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [active, setActive] = useState([])
-    const [allFeatures,setFeatures] =useState([])
-    const centers = useContext(CenterContext);
+    const [featuresActive, setActive] = useState([])
+    const {centers:[centers,setCenters],features:[features]} = useContext(CenterContext);
     useEffect(async ()=>{
-        const features= await getFeatures();
-        setFeatures([...features]);
         setActive([...getDetail(centers,centerId,"features")]); 
-
     },[]);
+    useEffect(()=>{
+
+    },[centers])
     const RenderItem=({item})=>{
         const {icon,title,id} = item;
-        console.log(icon);
-        const check = active.find(v=>v===id);
-        const toggleSwitch = () =>{
+        const check = featuresActive.find(v=>v===id);
+        const toggleSwitch = async () =>{
             if(check){
-                active.splice(active.indexOf(id),1);
-                setActive([...active]);
+                featuresActive.splice(featuresActive.indexOf(id),1);
+                setActive([...featuresActive]);
             }else{
-                setActive([...active,id]);
+                setActive([...featuresActive,id]);
             }
+            updateFeature(centerId,featuresActive)
+            setCenters(await loadAllCenter())
         }
         return(
             <View style={styles.feature}>
-            <View style={[styles.layout,{justifyContent:'space-between'}]}>
-                <View 
-                style={styles.star}
-                >
-                <Image source={{uri:icon}} style={styles.icon} />
-                    <Text style={styles.text}>{title}</Text>
-                </View>     
-                <View style={styles.switchButton}>
-                    <SwitchToggle
-                        switchOn={check}
-                        onPress={()=>toggleSwitch()}
-                        containerStyle={{
-                            width: 36,
-                            height: 22,
-                            borderRadius: 25,
-                            padding: 3,                            
-                        }}
-                        circleStyle={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: 9,
-                        }}
-                        circleColorOff='#FFFFFF'
-                        circleColorOn='#FFFFFF'
-                        backgroundColorOn='#DB147F'
-                        backgroundColorOff='#BEBEBE'
+                <View style={[styles.layout,{justifyContent:'space-between'}]}>
+                    <View style={styles.star}>
+                        <Image source={{uri:icon}} style={styles.icon} />
+                        <Text style={styles.text}>{title}</Text>
+                    </View>     
+                    <View style={styles.switchButton}>
+                        <SwitchToggle
+                            switchOn={check}
+                            onPress={()=>toggleSwitch()}
+                            containerStyle={styles.containerStyle}
+                            circleStyle={styles.circleStyle}
+                            circleColorOff='#FFFFFF'
+                            circleColorOn='#FFFFFF'
+                            backgroundColorOn='#DB147F'
+                            backgroundColorOff='#BEBEBE'
 
-                    />
+                        />
+                    </View>
                 </View>
-            </View>
-
         </View>
         );
     }
 
     return (
-        <View>
-            {allFeatures&&<FlatList
-                data={allFeatures}
+        <View style={styles.container}>
+            {features&&<FlatList
+                data={features}
                 renderItem={RenderItem}
                 keyExtractor={(item,index) => `feature${index}`}
                 style={styles.flatList}
@@ -81,14 +68,16 @@ const FeatureComponent = ({centerId}) => {
 export default FeatureComponent;
 
 export const styles = StyleSheet.create({
-
+    container:{
+        flex:1,
+        paddingBottom:20
+    },  
     feature: {
-        paddingTop: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
+       paddingHorizontal:20,
+       paddingBottom:6
     },
     layout:{
-        padding:20,
+        padding:16,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -102,19 +91,31 @@ export const styles = StyleSheet.create({
         
     },
     icon:{
-        width:30,
-        height:30
+        width:24,
+        height:24
     },
     star:{
         flexDirection:'row'
     },
     text:{
         fontSize:14,
-        marginHorizontal:10,
+        marginHorizontal:16,
+        alignSelf:'center'
     },
     switchButton: {
         justifyContent:'space-between',
     },
+    containerStyle:{
+        width: 36,
+        height: 22,
+        borderRadius: 25,
+        padding: 3,                            
+    },
+    circleStyle:{
+        width: 18,
+        height: 18,
+        borderRadius: 9,
+    }
 })
 
 

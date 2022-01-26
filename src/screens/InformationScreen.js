@@ -6,8 +6,9 @@ import SeeMore from '../components/SeeMore';
 
 const Information=({centerId})=> {
 
-    const centers =  useContext(CenterContext);
+    const {centers:[centers,setCenters]} =  useContext(CenterContext);
     const {description,emailAdmin,address}= centers.find(v=>v.id===centerId);
+    if(!address) return <Text> Error </Text>
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.content}>
@@ -24,11 +25,11 @@ const Information=({centerId})=> {
                 </View>
                 <View style={styles.contentRow}>
                     <Text style={styles.rowTitle}>Region</Text>
-                    <Text style={styles.rowDes}>{address.Region}</Text>
+                    <Text style={styles.rowDes}>{address?.Region}</Text>
                 </View>
                 <View style={styles.contentRow}>
                     <Text style={styles.rowTitle}>LGA</Text>
-                    <Text style={styles.rowDes}>{address.LGA}</Text>
+                    <Text style={styles.rowDes}>{address?.LGA}</Text>
                 </View>
             </View>
         </ScrollView>

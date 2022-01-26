@@ -5,7 +5,7 @@ import CenterContext from "../context/CenterContext";
 
 const ServiceComponent = ({ centerId }) => {
   const [services, setServices] = useState([]);
-  const centers = useContext(CenterContext);
+  const {centers:[centers,setCenters]} = useContext(CenterContext);
   useEffect(async () => {
     setServices(getDetail(centers, centerId, "services"));
   }, []);

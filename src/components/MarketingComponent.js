@@ -17,7 +17,7 @@ const MarketingComponent = ({ centerId }) => {
   const [allMarketings, setMarketings] = useState([]);
   const [active, setActive] = useState([]);
   const [dataModel, setDataModel] = useState();
-  const centers = useContext(CenterContext);
+  const {centers:[centers,setCenters]} = useContext(CenterContext);
   const refRBSheet = useRef();
 
   useEffect(async () => {
