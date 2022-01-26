@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable, StatusBar } from "react-native";
 import { Entypo,AntDesign } from "@expo/vector-icons";
-import Data from "../mockData/Data";
+import Data from "../mockData/Data.js";
 
 const Dashboard = () => {
     return (
@@ -22,7 +22,7 @@ const Dashboard = () => {
                 {
                     Data.map((item, index) => {
                         return (
-                            <View style={styles.viewCard} key={index.id}>
+                            <View style={styles.viewCard} key={index}>
                                 <View style={styles.card} >
                                     <View style={styles.leftCart} >
                                         <View style={{

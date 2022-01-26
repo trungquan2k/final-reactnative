@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View, Text, LayoutAnimation, Image, StyleSheet, } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import DoubleSlider from './DoubleSlider';
+import KindiCareComponent from './KindiCareComponent';
 
 
 
@@ -22,15 +22,15 @@ const RatingComponent = ({title,subtitle,description,rate,average_rate}) => {
                     />
                 </View>
                 <View style={styles.content}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.subtitle}>{subtitle}</Text>
+                    <Text style={!isOpen?styles.title:styles.titles}>{title}</Text>
+                    {!isOpen ? <Text style={styles.subtitle}>{subtitle}</Text> : <Text></Text>}
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
                     {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
                 </TouchableOpacity>
             </View>
             <View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
-                <DoubleSlider rate={rate} description={description} average_rate={average_rate} />
+                <KindiCareComponent rate={rate} description={description} average_rate={average_rate} />
             </View>
         </View>
     );
@@ -69,7 +69,15 @@ const styles = StyleSheet.create({
     title: {
         color: 'black',
         fontWeight: 'bold',
+        fontSize: 14,
+        justifyContent:'center'
+    },
+    titles:{
+        color: 'black',
+        fontWeight: 'bold',
         fontSize: 16,
+        position:'relative',
+        top:8,
         justifyContent:'center'
     },
     subtitle:{

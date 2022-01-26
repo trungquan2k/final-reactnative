@@ -4,15 +4,15 @@ import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSh
 import { FontAwesome } from '@expo/vector-icons';
 
 // NQS Rating Component
-const NQSRatingComponent = ({title,subtitle,nqs_rating}) => {
+const NQSRatingComponent = ({ title, subtitle, nqs_rating }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(value => !value);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
-    
 
-    const renderItem = ({ item,index }) => (
+
+    const renderItem = ({ item, index }) => (
         <View style={{ flexDirection: 'column' }}>
             <View style={{
                 flexDirection: 'row',
@@ -29,15 +29,16 @@ const NQSRatingComponent = ({title,subtitle,nqs_rating}) => {
         <View style={styles.rating}>
             <View style={styles.body}>
                 <View style={styles.headerTitle}>
-                    <Image
-                        source={{ uri: "https://i.ibb.co/4pFhggT/NQS-Rating.png" }}
-                        style={styles.icon}
-                    />
+                    {
+                        !isOpen ? <Image
+                            source={{ uri: "https://i.ibb.co/4pFhggT/NQS-Rating.png" }}
+                            style={styles.icon}
+                        />:null
+                   }
                 </View>
-
                 <View style={styles.content}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.subtitle}>{subtitle}</Text>
+                    <Text style={!isOpen ? styles.title : styles.titles}>{title}</Text>
+                    {!isOpen ? <Text style={styles.subtitle}>{subtitle}</Text> : <Text></Text>}
                 </View>
                 <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
                     {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
@@ -55,7 +56,7 @@ const NQSRatingComponent = ({title,subtitle,nqs_rating}) => {
                     <FlatList
                         data={nqs_rating}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item,index) => index.id}
                     />
                 </View>
             </View>
@@ -96,8 +97,18 @@ const styles = StyleSheet.create({
     title: {
         color: 'black',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 14,
         justifyContent: 'center'
+    },
+    titles: {
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 16,
+        position: 'relative',
+        top: 8,
+        right: 50,
+        justifyContent: 'center',
+        lineHeight: 24,
     },
     subtitle: {
         fontSize: 12,
