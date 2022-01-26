@@ -20,7 +20,7 @@ function LabelBase(props)
     );
 }
 
-export default function SliderCustomLabel(textTransformer: (value: number) => string)
+export default function SliderCustomLabel(textTransformer: (value: number)  => string)
 {
     return function (props)
     {

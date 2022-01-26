@@ -52,11 +52,11 @@ const HoursComponents = ({ centerId }) => {
     }
 
     return (
-        <>
+        <View>
             <Hour title="Normal" item={hours.normal} />
             <Hour title="School Holidays" item={hours.holidays} />
             <Hour title="School Term" item={hours.term} />
-        </>
+        </View>
     )
 }
 
