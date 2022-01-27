@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import NQSRatingComponent from './NQSRatingComponent';
 import RatingComponent from './RatingComponent';
 import ReviewUserComponent from './ReviewUserComponent';
@@ -15,11 +15,11 @@ const RatingAndServiceComponent = ({centerId}) => {
     },[]);
 
     return (
-        <View>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <RatingComponent title="KindiCare Rating" subtitle="Very Good" description={reviews?.description}  rate={reviews?.rate} average_rate={reviews?.average_rate}/>
             <ReviewUserComponent title="User Review" subtitle="Very Good" reviews={reviews?.user_reviews}/>
             <NQSRatingComponent title="NQS Rating" subtitle="Last reviewed 21 September 2017" nqs_rating={reviews?.nqs_rating} />
-        </View>
+        </ScrollView>
     );
 }
 export default RatingAndServiceComponent;

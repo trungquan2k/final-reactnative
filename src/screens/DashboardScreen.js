@@ -5,7 +5,7 @@ import Data from "../mockData/Data.js";
 
 const Dashboard = () => {
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <StatusBar style='light' />
             <View style={styles.header}>
             <Image source={require('../../assets/Vector.png')} width={100} style={styles.icon} />

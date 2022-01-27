@@ -184,7 +184,7 @@ const Centres = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <ScrollView
-        style={[styles.slider, { height: isModal ? null : 120 }]}
+        style={[styles.slider, { height: isModal ? 70 : 120 }]}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
-    padding: 12,
+    paddingHorizontal:12
   },
   sliderRow: {
     flexDirection: "row",

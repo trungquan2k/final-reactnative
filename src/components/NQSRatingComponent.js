@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet, } from 'react-native';
+import { TouchableOpacity, View, Text, LayoutAnimation, Image, StyleSheet, } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 // NQS Rating Component
@@ -12,7 +12,7 @@ const NQSRatingComponent = ({ title, subtitle, nqs_rating }) => {
     }
 
 
-    const renderItem = ({ item, index }) => (
+    const RenderItem = ( {item, index }) => (
         <View style={{ flexDirection: 'column' }}>
             <View style={{
                 flexDirection: 'row',
@@ -53,11 +53,11 @@ const NQSRatingComponent = ({ title, subtitle, nqs_rating }) => {
                             marginVertical: 10
                         }}>Last Reviewed 01 December 2019</Text>
                     </View>
-                    <FlatList
-                        data={nqs_rating}
-                        renderItem={renderItem}
-                        keyExtractor={(item,index) => index}
-                    />
+                    {
+                        typeof nqs_rating != 'undefined' && nqs_rating.map((item,index)=>{
+                            return <RenderItem key={index} item={item} index={index}/>
+                        })
+                    }
                 </View>
             </View>
         </View>

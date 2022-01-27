@@ -60,6 +60,7 @@ const FeatureComponent = ({centerId}) => {
                 renderItem={RenderItem}
                 keyExtractor={(item,index) => `feature${index}`}
                 style={styles.flatList}
+                showsVerticalScrollIndicator={false}
             />}
         </View>
     )

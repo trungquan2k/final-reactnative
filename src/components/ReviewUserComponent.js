@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { TouchableOpacity, View, Text, LayoutAnimation, Image, FlatList, StyleSheet, ScrollView } from 'react-native';
+import { TouchableOpacity, View, Text, LayoutAnimation, Image, StyleSheet } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import ImageView from "react-native-image-viewing";
 
@@ -180,11 +180,11 @@ const ReviewUserComponent = ({ title, subtitle, reviews }) => {
                 </TouchableOpacity>
             </View>
             <View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
-                <FlatList
-                    data={reviews}
-                    renderItem={RenderItem}
-                    keyExtractor={(item, index) => `review${index}`}
-                />
+                {
+                    typeof reviews!='undefined' && reviews.map((item, index)=>{
+                        return <RenderItem key={index} item={item}/>
+                     })
+                }
             </View>
             <ImageView
                 images={imageArr}
@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        height: 300,
     },
     button: {
         padding: 5,

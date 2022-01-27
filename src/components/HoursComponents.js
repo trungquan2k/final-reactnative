@@ -14,48 +14,6 @@ const HoursComponents = ({ centerId }) => {
     const [activeOne, setActiveOne] = useState(hours.normal.Mon_Fri);
     const [activeTwo, setActiveTwo] = useState(hours.term.Mon_Fri);
     const [activeThree, setActiveThree] = useState(hours.holidays.Mon_Fri);
-    const Hour = ({ title, item }) => {
-
-        const { Mon_Fri, Sat, Sun } = item;
-
-        return (
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <View>
-                        <Text style={styles.title}>{title}</Text>
-                    </View>
-                    <View style={styles.header}>
-                        <TouchableOpacity onPress={()=>{}} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>Mon-Fri</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>Sat</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }} style={styles.btnSelected}>
-                            <Text style={styles.textLight}>Sun</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.body}>
-                        <View style={styles.bodyLeft}>
-                            <Text style={styles.textDark}>Morning</Text>
-                            <View style={{ flexDirection: "row" }}>
-                                <Text style={styles.hours}>{Mon_Fri.morning.start}</Text>
-                                <Text style={styles.hours}>{Mon_Fri.morning.end}</Text>
-                            </View>
-                        </View>
-                        <View >
-                            <Text style={styles.textDark}>Afternoon</Text>
-                            <View style={{ flexDirection: "row" }}>
-                                <Text style={styles.hours}>{Mon_Fri.afternoon.start}</Text>
-                                <Text style={styles.hours}>{Mon_Fri.afternoon.end}</Text>
-                            </View>
-                        </View>
-
-                    </View>
-                </View>
-            </View>
-        );
-    }
 
   const Button = ({value, active, setActive }) => {
     return (
@@ -163,8 +121,9 @@ const styles = StyleSheet.create({
   },
   timeItem: {
     paddingVertical: 6,
-    paddingHorizontal: 10,
     borderRadius: 8,
+    width:58,
+    textAlign:'center',
     backgroundColor: "#E9F4FF",
   },
 });
