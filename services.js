@@ -45,3 +45,6 @@ export const getUser= async(uid)=>{
 export const updateFeature=(centerId,data=[])=>{
     db.collection("centers").doc(centerId).update({"features":data});
 }
+export const addNewCenter= async(docData)=>{
+    await db.collection("centers").add(docData);
+}

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -26,14 +26,25 @@ const Centres = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [checked, setChecked] = useState("all");
   const [isModal, setModal] = useState(false);
-  const  {centers:[centers,setCenters]}= useContext(CenterContext)
-  const refRBSheet = useRef();
+  const  {centers:[centers,setCenters]}= useContext(CenterContext);
+  const [viewSearch,setViewSearch]= useState([...centers]);
+  const refRBSheet = useRef();  
+  const handleSearch=(text)=>{
+    setSearchQuery(text)
+    if(text==""){
+      setViewSearch([...centers]);
+      return;
+    }
+    setViewSearch([...centers.filter((v)=>v.name.match(new RegExp(text,'i')))]);
+  }
+
+  
   const Header = () => {
     return (
       <View style={styles.searchBar}>
         <Searchbar
           placeholder="Search Centre name"
-          onChangeText={(value) => setSearchQuery(value)}
+          onChangeText={(text)=>{handleSearch(text)}}
           value={searchQuery}
           style={{
             width: "85%",
@@ -179,7 +190,7 @@ const Centres = ({ navigation }) => {
           <Text style={styles.headerTitle}>All Centres</Text>
           <AntDesign name="down" size={20} color="white" />
         </Pressable>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate('AddCenter')}>
           <AntDesign name="pluscircleo" size={20} color="white" />
         </TouchableOpacity>
       </View>
@@ -222,12 +233,13 @@ const Centres = ({ navigation }) => {
         </HeaderItem>
       </ScrollView>
       <FlatList
-        data={getGeneralInfo(centers)}
+        data={viewSearch}
         renderItem={Item}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={Header}
         style={styles.body}
         showsVerticalScrollIndicator={false}
+        extraData={searchQuery}
       />
       <RBSheet
         ref={refRBSheet}
@@ -258,16 +270,17 @@ const Centres = ({ navigation }) => {
         </View>
         <Searchbar
           placeholder="Search Centre name"
-          onChangeText={setSearchQuery}
+          onChangeText={(text)=>{handleSearch(text)}}
           value={searchQuery}
           style={styles.modalSearch}
         />
         <FlatList
-          data={centers}
+          data={viewSearch}
           ListHeaderComponent={modalHeader}
           renderItem={modalItem}
           keyExtractor={(modalItem) => modalItem.id}
           showsVerticalScrollIndicator={false}
+          extraData={searchQuery}
         />
       </RBSheet>
     </View>
