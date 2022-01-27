@@ -8,6 +8,7 @@ import CentreDetails from '../screens/CentreDetailsScreen';
 import Profile from '../screens/ProfileScreen';
 import CenterContext from '../context/CenterContext';
 import { getFeatures, loadAllCenter } from '../../services';
+import AddCenterScreen from '../screens/AddCenterScreen';
 
 export default function StackNavigation() {
     const [centers, setCenters] = useState([]);
@@ -31,6 +32,7 @@ export default function StackNavigation() {
                     <Stack.Screen name='TabNavigation' component={TabNavigation} options={{ headerShown: false }} />
                     <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
                     <Stack.Screen name='CentreDetails' component={CentreDetails} options={{ headerShown: false }} />
+                    <Stack.Screen name='AddCenter' component={AddCenterScreen} options={{headerShown:false}} />
                 </Stack.Navigator>
             </NavigationContainer>
         </CenterContext.Provider>

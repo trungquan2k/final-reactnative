@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable,
 import { Entypo,AntDesign } from "@expo/vector-icons";
 import Data from "../mockData/Data.js";
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
     return (
         <ScrollView style={styles.container}>
             <StatusBar style='light' />
@@ -14,7 +14,7 @@ const Dashboard = () => {
                     <Text style={styles.headerTitle}>Goodstart Early Learning ABC</Text>
                     <AntDesign name="down" size={20} color="white" />
                 </Pressable>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={()=>navigation.navigate('AddCenter')} >
                     <AntDesign name="pluscircleo" size={20} color="white"  />
                 </TouchableOpacity>
             </View>
