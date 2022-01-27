@@ -58,11 +58,11 @@ const KindiCareComponent = ({ average_rate, rate, description }) => {
             <View style={styles.notes}>
                 <View style={styles.average}>
                     <View style={styles.boxAverage} />
-                    <Text>Average</Text>
+                    <Text> Average</Text>
                 </View>
                 <View style={styles.service}>
                     <View style={styles.boxService} />
-                    <Text>This Service</Text>
+                    <Text> This Service</Text>
                 </View>
             </View>
             <View>

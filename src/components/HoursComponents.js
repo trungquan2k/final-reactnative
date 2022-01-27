@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#F2F2F2",
-    width: 146,
+    width: "48%",
   },
   timeTitle: {
     marginBottom: 4,
