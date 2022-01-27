@@ -1,0 +1,410 @@
+import React, { useState } from 'react'
+import { StyleSheet, TouchableOpacity, View, Text, LayoutAnimation, Image } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
+const TIME = { min: 0, max: 24 }
+const SliderPad = 12;
+const Accordion = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleOpen = () => {
+        setIsOpen(value => !value);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+
+    const [multiSliderValue, setMultiSliderValue] = useState([3, 7]);
+
+    
+    const { min, max } = TIME;
+    const [width, setWidth] = useState(280);
+    const [selected, setSelected] = useState(null);
+
+    if (!selected) {
+        setSelected([min]); // we are only selected min, since it is single slider
+    }
+
+    // Callbacks
+    const onLayout = (event) => {
+        setWidth(event.nativeEvent.layout.width - SliderPad * 2);
+    };
+    const onValuesChangeFinish = (values) => {
+        setSelected(values);
+    };
+    return (
+        <View style={styles.rating}>
+            <View style={styles.body}>
+                <Image
+                    source={{ uri: props.imgUri }}
+                    style={{
+                        height: 48,
+                        width: 48,
+                        resizeMode: 'contain',
+                    }}
+                />
+                <View style={styles.content}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.title}>{props.subtitle}</Text>
+                </View>
+                <TouchableOpacity onPress={toggleOpen} activeOpacity={0.6} style={styles.button}>
+                    {!isOpen ? <FontAwesome name={'chevron-down'} size={14} color="black" /> : <FontAwesome name={'chevron-up'} size={14} color="black" />}
+                </TouchableOpacity>
+            </View>
+           <View style={{marginTop:100}}>
+           <MultiSlider
+                min={min}
+                max={max}
+                allowOverlap
+                values={selected}
+                sliderLength={width}
+                onValuesChangeFinish={onValuesChangeFinish}
+                enableLabel={true}
+                trackStyle={{
+                    height: 10,
+                    borderRadius: 8,
+                }}
+                markerOffsetY={3}
+                selectedStyle={{
+                    backgroundColor: "#895CDF",
+                }}
+                unselectedStyle={{
+                    backgroundColor: "#000",
+                }}
+            />
+           </View>
+
+        </View>
+    );
+};
+export default Accordion;
+const styles = StyleSheet.create({
+    rating: {
+        // flex:1,
+        padding: 20,
+    },
+    body: {
+        flexDirection: 'row',
+        padding: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0,
+        elevation: 1,
+        backgroundColor: "white",
+        borderRadius: 10
+    },
+    content: {
+        flexDirection: 'column',
+        // justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        flex: 1
+    },
+    title: {
+        color: 'black',
+        // paddingVertical: 4,
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    hidden: {
+        height: 0,
+    },
+    list: {
+        overflow: 'hidden'
+    },
+    button: {
+        alignItems: 'baseline',
+        padding: 5
+        // justifyContent:'center'
+    }
+});
+
+//<View style={[styles.list, !isOpen ? styles.hidden : undefined]}>
+{/* <Text>{props.children}</Text>
+</View>
+<View style={styles.container}>
+    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{range}</Text>
+    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{sliding}</Text>
+    <Slider
+        style={{ width: 250, height: 40 }}
+        minimumValue={0}
+        maximumValue={10}
+        minimumTrackTintColor="yellow"
+        maximumTrackTintColor="#000000"
+        thumbTintColor='tomato'
+        value={5}
+        onValueChange={value => setRange(parseFloat(value))}
+        onSlidingStart={() => setSliding('Sliding')}
+        onSlidingComplete={() => setSliding('Inactive')}
+    />
+    <StatusBar style="auto" />
+</View> */}
+
+
+///centre 
+  const data = [
+        {
+            id: 1,
+            imgUri: "https://i.ibb.co/3kX4vCy/icon.png",
+            title: "Long Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 2,
+            imgUri: "https://i.ibb.co/k85FjrG/icon1.png",
+            title: "Pre-School/ Kindergarten",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 3,
+            imgUri: "https://i.ibb.co/nmZX5zP/icon2.png",
+            title: "Before & After School Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 4,
+            imgUri: "https://i.ibb.co/ssp4GPP/icon3.png",
+            title: "Family Day Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        },
+        {
+            id: 5,
+            imgUri: "https://i.ibb.co/RHvbgJR/icon4.png",
+            title: "Vacation Care",
+            subtile: "0 to 12 months",
+            money: "$112.00 /full day"
+        }
+    ]
+    const renderItem = ({ item }) => (      
+        <ServiceComponent
+            imgUri={item.imgUri}
+            title={item.title}
+            subtitle={item.subtile}
+            money={item.money}
+
+        />
+    );
+
+    
+    return (
+        <ScrollView style={styles.container}>
+            {/* <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+            /> */}
+            <Accordion
+                imgUri="https://i.ibb.co/RHvbgJR/icon4.png"
+                title="asdasasdas"
+                subtitle="abc"
+                children="xyz"
+            />
+            <Accordion
+                imgUri="https://i.ibb.co/RHvbgJR/icon4.png"
+                title="aec"
+                subtitle="abc"
+                children="xyz"
+            />
+
+        </ScrollView>
+    );
+
+
+    import React from "react";
+import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, FlatList, SafeAreaView } from "react-native";
+import { FontAwesome, Ionicons, AntDesign, Entypo } from "@expo/vector-icons";
+import CardContentDashBoard from "../components/CardContentDashBoard";
+import { Pressable } from "react-native";
+
+
+const Dashboard = ({ navigation }) => {
+
+    const data = [
+        {
+            id: 1,
+            imgUri: "https://i.ibb.co/NCS4kTW/icon1.png",
+            color: "#FB8429",
+            headerLeft: "Aplication",
+            contentLeft1: "Open Application Value",
+            contentLeft2: "Total Waitlisted",
+            contentLeft3: "Waitlist Value",
+            headerRight: "17",
+            contentRight1: "116,688,8",
+            contentRight2: "3",
+            contentRight3: "$29,749 p.a"
+        },
+        {
+            id: 2,
+            imgUri: "https://i.ibb.co/QQX3G6X/icon2.png",
+            color: "#32A4FC",
+            headerLeft: "Total Activities",
+            contentLeft1: "Mailbox Received",
+            contentLeft2: "Mailbox Awaiting Reply",
+            contentLeft3: "Task Overdue",
+            headerRight: "17",
+            contentRight1: "342",
+            contentRight2: "6",
+            contentRight3: "2",
+        },
+        {
+            id: 3,
+            imgUri: "https://i.ibb.co/Fxx3Cwq/icon3.png",
+            color: "#DB147F",
+            headerLeft: "Total Centres",
+            contentLeft1: "Total Places",
+            contentLeft2: "Enrolment Coverage",
+            contentLeft3: "Average Enquiry ",
+            headerRight: "32",
+            contentRight1: "160%",
+            contentRight2: "72%",
+            contentRight3: "24 hrs 36 mins",
+        }
+    ];
+
+    const renderItems = ({ item }) => {
+        return (
+            <View>
+                <View style={styles.viewContent}>
+                    <View style={styles.card} >
+                        <View style={styles.leftCart} >
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Image
+                                    source={{ uri: item.imgUri }}
+                                    style={styles.image}
+                                />
+                                <Text style={{
+                                    marginLeft: 16,
+                                    fontSize: 16,
+                                    fontWeight: 'bold'
+                                }}>{item.headerLeft}</Text>
+                            </View>
+                            <Text style={styles.textContent}>{item.contentLeft1}</Text>
+                            <Text style={styles.textContent}>{item.contentLeft2}</Text>
+                            <Text style={styles.textContent}>{item.contentLeft3}</Text>
+                        </View>
+                        <View style={styles.rightCard}>
+                            <Text style={{
+                                color: item.color,
+                                fontSize: 16,
+                                fontWeight: 'bold'
+                            }}
+                            >{item.headerRight}</Text>
+                            <Text style={styles.textContent}>{item.contentRight1}</Text>
+                            <Text style={styles.textContent}>{item.contentRight2}</Text>
+                            <Text style={styles.textContent}>{item.contentRight3}</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <StatusBar style='light' />
+            <View style={styles.header}>
+                <Image source={require('../../assets/Vector.png')} width={100} style={styles.icon} />
+                <Pressable style={styles.headerSelect} onPress={() => { }}>
+                    <Entypo name="shop" size={20} color='white' />
+                    <Text style={styles.headerTitle}>Goodstart Early Learning ABC</Text>
+                    <AntDesign name="down" size={20} color="white" />
+                </Pressable>
+                <TouchableOpacity>
+                    <AntDesign name="pluscircleo" size={20} color="white" />
+                </TouchableOpacity>
+            </View>
+            <FlatList
+                data={data}
+                renderItem={renderItems}
+                keyExtractor={item => item.id}
+            />
+        </SafeAreaView>
+    );
+}
+export default Dashboard;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    header: {
+        width: "100%",
+        height: 136,
+        backgroundColor: '#DB147F',
+        borderBottomColor: '#DB147F',
+        borderBottomRightRadius: 12,
+        borderBottomLeftRadius: 12,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 52,
+        paddingHorizontal: 20,
+        position:'absolute'
+    },
+    headerSelect: {
+        flexDirection: 'row',
+    },
+    headerTitle: {
+        color: 'white',
+        fontSize: 14,
+        paddingHorizontal: 10
+    },
+    icon: {
+        position: 'absolute',
+        left: 0
+    },
+
+    // style view card
+    viewContent: {
+        padding: 20,
+        height: 200,
+        marginBottom: 30,
+        position: 'relative',
+    },
+    card: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 4.65,
+        height: 214,
+        flexDirection: "row",
+        width: "100%",
+        backgroundColor: "white",
+        flexWrap: "wrap",
+        borderColor: "black",
+        borderBottomColor: '#DB147F',
+        borderRadius: 16,
+        //position
+        top:80,
+        padding: 16,
+        alignItems: 'center',
+    },
+    leftCart: {
+        flex: 1,
+        alignItems: "flex-start",
+    },
+    rightCard: {
+        alignItems: "flex-end",
+    },
+    textContent: {
+        color: "black",
+        fontSize: 16,
+        lineHeight: 24,
+        paddingVertical: 15,
+        justifyContent: 'space-between'
+    },
+    image: {
+        height: 30,
+        width: 30,
+    }
+});
